@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Methods
+comment0.text=\n\ Write\ a\ description\ of\ class\ Methods\ here.\n\n\ @author\ Nicholas\ Walters\n\ @version\ 9\ May\ 2018\n
+comment1.params=
+comment1.target=Methods()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Methods\n
+comment2.params=y
+comment2.target=int\ sampleMethod(int)
+comment2.text=\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\n\n\ @param\ \ y\ \ a\ sample\ parameter\ for\ a\ method\n\ @return\ \ \ \ the\ sum\ of\ x\ and\ y\n
+numComments=3

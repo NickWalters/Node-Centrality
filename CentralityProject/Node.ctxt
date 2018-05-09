@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Node
+comment0.text=\n\ Stores\ all\ the\ information\ for\ each\ Node\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=type\ a\ b
+comment1.target=Node(java.lang.String,\ int,\ int)
+comment2.params=
+comment2.target=int\ getEdgeCount()
+comment3.params=edgeCount
+comment3.target=void\ setEdgeCount(int)
+comment4.params=
+comment4.target=int\ getNodeID()
+comment5.params=id
+comment5.target=void\ setNodeID(int)
+comment6.params=
+comment6.target=int\ getCurrentDistance()
+comment7.params=currentDistance
+comment7.target=void\ setCurrentDistance(int)
+numComments=8

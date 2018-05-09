@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Centrality
+comment0.text=\n\ This\ is\ the\ big\ boy\ class.\ all\ the\ centrality\ work\ is\ calculated\ here\n\ But\!\ dont\ make\ it\ too\ big\!\ you\ can\ use\ helper\ classes\ too\ if\ nessessary\!\n\n\ @author\ Nicholas\ Walters\n\ @version\ 9\ May\ 2018\ (last\ change\ by\ Nick)\n
+comment1.params=
+comment1.target=void\ getDegreeCentrality()
+comment1.text=\n\ returns\ the\ degree\ centrality\ of\ a\ given\ graph\n
+comment2.params=
+comment2.target=void\ getClosenessCentrality()
+comment3.params=
+comment3.target=void\ getBetweenessCentrality()
+comment4.params=
+comment4.target=void\ getKatzCentrality()
+numComments=5
