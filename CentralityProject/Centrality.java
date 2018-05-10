@@ -22,9 +22,32 @@ public class Centrality
      * @param matrixOfGraph, the matrix representation of graph/text file
      * @param allNodesUnique, a list containing info of all distinct nodes
      */
-    public int getDegreeCentrality(ArrayList<Integer> nodes){
+    public void getDegreeCentrality(ArrayList<String> nodes){
+        HashMap<Integer, Integer> nodesMap = new HashMap<>();
         
-        return 0;
+        for(String line: nodes){
+            // get two nodes per line, put in array
+            String[] bothNodes = line.split(" ");
+            // if hashmap contains these nodes already, then increment its edgeValue
+            // if not in hashmap, then add Node and its edge count is 1
+            if(!nodesMap.containsKey(bothNodes[0])){
+                nodesMap.put(Integer.parseInt(bothNodes[0]), 1);
+            }
+            else{
+                int numEdges = nodesMap.get(bothNodes[0]);
+                nodesMap.put(Integer.parseInt(bothNodes[0]), numEdges++);
+            }
+            
+            if(!nodesMap.containsKey(bothNodes[1])){
+                nodesMap.put(Integer.parseInt(bothNodes[1]), 1);
+            }
+            else{
+                int numEdges = nodesMap.get(bothNodes[1]);
+                nodesMap.put(Integer.parseInt(bothNodes[1]), numEdges++);
+            }
+        }
+        //print all the nodes, with their associated values
+        System.out.println(nodesMap.entrySet());
     }
     
     
