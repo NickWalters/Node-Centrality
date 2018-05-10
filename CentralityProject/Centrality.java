@@ -56,7 +56,15 @@ public class Centrality
     }
     
     
-    public Node[] getBetweenessCentrality(){
+    public Node[] getBetweenessCentrality(int[][] ajMatrix, int numNodes){
+        //analyse the adjacency matrix of edges
+        //each row of the ajacency matrix gives enough information for that nodes specific BC
+        // do this for every row, and sum up all the BC's
+        for(int i=0; i<numNodes; i++){
+            for(int j=0; i<numNodes; i++){
+                
+            }
+        }
         return null;
     }
     
