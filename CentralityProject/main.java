@@ -23,7 +23,9 @@ public class main
         for(int i=0; i<degree42833.length; i++){
             System.out.println();
         }
-        
+        long endTime = System.currentTimeMillis();
+        long totalTimeTaken = endTime - time;
+        System.out.println("Run time: totalTimeTaken
         
         
         // read the file data for 78813.edges.txt
