@@ -12,9 +12,9 @@ public class FileData
 {
     // instance variables - replace the example below with your own
     private String filename;
-    public int numNodes;
-    public ArrayList<Integer> nodeNumbers;
-    public HashMap<Integer, Integer> nodeNumHash;
+    private int numNodes;
+    private ArrayList<Integer> nodeNumbers;
+    private HashMap<Integer, Integer> nodeNumHash;
     
     /**
      * initialise data to work with
@@ -93,12 +93,16 @@ public class FileData
         System.out.println(str);
     }
     
-    public void getAjMatrix(){
-        
+    public int[] getAjMatrix(){
+        return null;
     }
     
     public String getFileName(){
         return filename;
+    }
+    
+    public ArrayList<Integer> getUniqueNodes(){
+        return nodeNumbers;
     }
 }
 
