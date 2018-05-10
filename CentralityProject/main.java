@@ -16,8 +16,9 @@ public class main
         ArrayList<Integer> nodesUnique = data428333.getUniqueNodes();
         // run the 4 centrality measures, also time performance
         long time = System.currentTimeMillis(); //Start timer
+        /*
         Centrality graph438333 = new Centrality(data428333);
-        Node[] degree42833 = graph438333.getDegreeCentrality(matrix,nodesUnique);
+        Node[] degree42833 = graph438333.getDegreeCentrality(matrix, nodesUnique);
         System.out.println("Degree centrality for: " + data428333.getFileName());
         
         for(int i=0; i<degree42833.length; i++){
@@ -25,7 +26,9 @@ public class main
         }
         long endTime = System.currentTimeMillis();
         long totalTimeTaken = endTime - time;
-        System.out.println("Run time: totalTimeTaken
+        System.out.println("Run time:" + totalTimeTaken + "ms");
+        System.out.println();
+        */
         
         
         // read the file data for 78813.edges.txt

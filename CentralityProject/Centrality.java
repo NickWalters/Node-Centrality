@@ -9,12 +9,11 @@ import java.util.*;
 public class Centrality
 {
     // instance variables - replace the example below with your own
-    private int x;
-    Node node;
+    ArrayList<Integer> array;
     
-    public Centrality(FileData graphInfo)
+    public Centrality(FileData info)
     {
-        
+        array = info.readFile(1);
     }
     
     
@@ -23,8 +22,9 @@ public class Centrality
      * @param matrixOfGraph, the matrix representation of graph/text file
      * @param allNodesUnique, a list containing info of all distinct nodes
      */
-    public Node[] getDegreeCentrality(int[] matrixOfGraph, ArrayList<Integer> allNodesUnique){
-        return null;
+    public int getDegreeCentrality(ArrayList<Integer> nodes){
+        
+        return 0;
     }
     
     

@@ -13,7 +13,7 @@ public class FileData
     // instance variables - replace the example below with your own
     private String filename;
     private int numNodes;
-    private ArrayList<Integer> nodeNumbers;
+    
     private HashMap<Integer, Integer> nodeNumHash;
     
     /**
@@ -33,7 +33,7 @@ public class FileData
      * input 2, to read 78813.edges.txt
      * Doing this allows distinction between which file you are using
      */
-    public void readFile(int whichFile){
+    public ArrayList<String> readFile(int whichFile){
         if(whichFile == 1){
             String filename = "428333.edges.txt";
             readFileHelper(filename);
@@ -43,12 +43,12 @@ public class FileData
             readFileHelper(filename);
         }
         else{
-            System.out.println("--ERROR--, please select from the two files");
-            
+            System.out.println("--ERROR--, please select from the two files");   
         }
     }
     
-    private void readFileHelper(String filename){
+    private ArrayList<String> readFileHelper(String filename){
+        ArrayList<String> nodeNumbers = new Arra
         int i = 0;
         try(BufferedReader reader = new BufferedReader(new FileReader(filename)))
         {
