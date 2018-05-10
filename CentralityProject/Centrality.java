@@ -13,7 +13,7 @@ public class Centrality
     
     public Centrality(FileData info)
     {
-        array = info.readFile(1);
+        //array = info.readFile(1);
     }
     
     

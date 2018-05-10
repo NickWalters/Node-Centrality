@@ -1,3 +1,4 @@
+
 import java.util.*;
 import java.io.*;
 /**
@@ -9,13 +10,6 @@ import java.io.*;
 public class FileData
 {    
     private String filename;
-<<<<<<< HEAD
-    private int numNodes;
-    
-    private HashMap<Integer, Integer> nodeNumHash;
-    
-=======
->>>>>>> f9c7fce5bf9a2131cb505fd08c8af422b5ba98ac
     /**
      * initialise data to work with
      * use this data for algorithms
@@ -39,23 +33,14 @@ public class FileData
             return readFileHelper(filename);
         }
         else{
-<<<<<<< HEAD
-            System.out.println("--ERROR--, please select from the two files");   
-=======
             System.out.println("--ERROR--, please select from the two files");
             return null;
->>>>>>> f9c7fce5bf9a2131cb505fd08c8af422b5ba98ac
         }
     }
     
     private ArrayList<String> readFileHelper(String filename){
-<<<<<<< HEAD
-        ArrayList<String> nodeNumbers = new Arra
-        int i = 0;
-=======
 
         ArrayList<String> nodes = new ArrayList<String>();
->>>>>>> f9c7fce5bf9a2131cb505fd08c8af422b5ba98ac
         try(BufferedReader reader = new BufferedReader(new FileReader(filename)))
         {
             String line;
@@ -85,4 +70,3 @@ public class FileData
     }
     */
 }
-
