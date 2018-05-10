@@ -1,4 +1,4 @@
-
+import java.util.*;
 /**
  * This is the big boy class. all the centrality work is calculated here
  * But! dont make it too big! you can use helper classes too if nessessary!
@@ -12,7 +12,7 @@ public class Centrality
     private int x;
     Node node;
     
-    public Centrality(Node node)
+    public Centrality(FileData graphInfo)
     {
         
     }
@@ -20,23 +20,25 @@ public class Centrality
     
     /**
      * returns the degree centrality of a given graph
+     * @param matrixOfGraph, the matrix representation of graph/text file
+     * @param allNodesUnique, a list containing info of all distinct nodes
      */
-    public void getDegreeCentrality(){
-
+    public Node[] getDegreeCentrality(int[] matrixOfGraph, ArrayList<Integer> allNodesUnique){
+        return null;
     }
     
     
-    public void getClosenessCentrality(){
-   
+    public Node[] getClosenessCentrality(){
+        return null;
     }
     
     
-    public void getBetweenessCentrality(){
-        
+    public Node[] getBetweenessCentrality(){
+        return null;
     }
     
     
-    public void getKatzCentrality(){
-        
+    public Node[] getKatzCentrality(){
+        return null;
     }
 }
