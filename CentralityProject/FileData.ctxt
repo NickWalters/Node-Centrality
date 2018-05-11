@@ -1,14 +1,16 @@
 #BlueJ class context
 comment0.target=FileData
 comment0.text=\n\ This\ class\ reads\ the\ text\ files\ containing\ the\ nodes,\ and\ prints\ output\n\n\ @author\ (Nicholas\ Walters)\n\ @version\ 9\ May\ 2018\n
-comment1.params=
-comment1.target=FileData()
+comment1.params=whichFile
+comment1.target=FileData(int)
 comment1.text=\n\ initialise\ data\ to\ work\ with\n\ use\ this\ data\ for\ algorithms\n
 comment2.params=whichFile
 comment2.target=java.util.ArrayList\ readFile(int)
 comment2.text=\n\ input\ 1,\ to\ read\ 42833.edges.txt\n\ input\ 2,\ to\ read\ 78813.edges.txt\n\ Doing\ this\ allows\ distinction\ between\ which\ file\ you\ are\ using\n
 comment3.params=filename
 comment3.target=java.util.ArrayList\ readFileHelper(java.lang.String)
-comment4.params=
-comment4.target=java.lang.String\ getFileName()
-numComments=5
+comment4.params=filename
+comment4.target=int[][]\ generateAjMatrix(java.lang.String)
+comment5.params=
+comment5.target=java.lang.String\ getFileName()
+numComments=6
