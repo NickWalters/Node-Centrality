@@ -1,5 +1,8 @@
 
 import java.util.*;
+
+import org.omg.PortableInterceptor.USER_EXCEPTION;
+
 import java.io.*;
 /**
  * This class reads the text files containing the nodes, and prints output
@@ -18,23 +21,25 @@ public class FileData
      */
     public FileData(int whichFile) throws Exception
     {
+    	
         ArrayList<String> nodes = readFile(whichFile);
-        ajMatrix = generateAjMatrix(filename);
+        //ajMatrix = generateAjMatrix(filename);
     }
     /**
      * input 1, to read 42833.edges.txt
      * input 2, to read 78813.edges.txt
      * Doing this allows distinction between which file you are using
      */
-    public ArrayList<String> readFile(int whichFile) throws Exception{
+    private ArrayList<String> readFile(int whichFile) throws Exception{
         try{
             if(whichFile == 1){
-            filename = "428333.edges.txt";
-            return readFileHelper(filename);
+                System.out.println(System.getProperty("user.dir"));
+                filename = "428333.edges.txt";
+                return readFileHelper(filename);
             }   
             if(whichFile == 2){
-            filename = "78813.edges.txt";
-            return readFileHelper(filename);
+                filename = "78813.edges.txt";
+                return readFileHelper(filename);
             }
         }
         catch(Exception e){
@@ -60,6 +65,7 @@ public class FileData
             System.out.println("--Error, Cant read file-- " + e.getMessage());
             throw new FileNotFoundException("Not found");
         }
+
         return nodes;
     }
     
@@ -81,15 +87,18 @@ public class FileData
     public String getFileName() {
         return filename;
     }
-    /*
+   
     public int[][] getAjMatrix(){
 
-        return null;
+        return ajMatrix;
     }
-    */
+    
     /*
     public ArrayList<Integer> getUniqueNodes(){
         return nodeNumbers;
     }
     */
+    public ArrayList<String> getNodes() {
+    	return nodes;
+    }
 }
