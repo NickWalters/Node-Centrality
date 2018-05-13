@@ -12,8 +12,7 @@ public class main
         // read the file data for 428333.edges.txt
         FileData data428333 = new FileData(1);
         Centrality c4 = new Centrality(data428333);
-        c4.getDegreeCentrality(data428333.readFile(1));
-        c4.getClosenessCentrality();
+        c4.getDegreeCentrality(data428333.getNodes());
         
         //int[] matrix = data428333.getAjMatrix();
         //ArrayList<Integer> nodesUnique = data428333.getUniqueNodes();
@@ -35,14 +34,16 @@ public class main
         
         
         // read the file data for 78813.edges.txt
+        /*
         try {
             FileData data78813 = new FileData(2);
-            data78813.readFile(2);
+            data78813.getNodes();
         }
         catch (Exception e) {
 
 
         }
+        */
         //data78813.getAjMatrix();
     }
 }

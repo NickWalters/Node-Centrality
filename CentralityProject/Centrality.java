@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * This is the big boy class. all the centrality work is calculated here
@@ -17,67 +18,72 @@ public class Centrality
         //array = info.readFile(1);
     }
     
-    
+    // EDIT, changed to use an arraylist filled with arrays of ints (no parsing needed)- James
     /**
      * returns the degree centrality of a given graph
      * @param matrixOfGraph, the matrix representation of graph/text file
      * @param allNodesUnique, a list containing info of all distinct nodes
      */
-    public void getDegreeCentrality(ArrayList<String> nodes){
+    public Set<Entry<Integer, Integer>> getDegreeCentrality(ArrayList<int[]> nodes){
         HashMap<Integer, Integer> nodesIndex = new HashMap<>();
+        //indexNodes not used
         HashMap<Integer, Integer> indexNodes = new HashMap<>();
-        for(String line: nodes){
-            // get two nodes per line, put in array
-            String[] bothNodes = line.split(" ");
+        for(int[] bothNodes: nodes){
             // if hashmap contains these nodes already, then increment its edgeValue
             // if not in hashmap, then add Node and its edge count is 1
             if(!nodesIndex.containsKey(bothNodes[0])){
-                nodesIndex.put(Integer.parseInt(bothNodes[0]), 1);
+                nodesIndex.put(bothNodes[0], 1);
             }
             else{
                 int numEdges = nodesIndex.get(bothNodes[0]);
-                nodesIndex.put(Integer.parseInt(bothNodes[0]), numEdges++);
+                nodesIndex.put(bothNodes[0], numEdges++);
             }
             
             if(!nodesIndex.containsKey(bothNodes[1])){
-                nodesIndex.put(Integer.parseInt(bothNodes[1]), 1);
+                nodesIndex.put(bothNodes[1], 1);
             }
             else{
                 int numEdges = nodesIndex.get(bothNodes[1]);
-                nodesIndex.put(Integer.parseInt(bothNodes[1]), numEdges++);
+                nodesIndex.put(bothNodes[1], numEdges++);
             }
         }
         //print all the nodes, with their associated values
         System.out.println(nodesIndex.entrySet());
+        return nodesIndex.entrySet();
     }
 
-    
+	
     //adj is edgeMatrix
-    public int[] getClosenessCentrality(int[][] adj)
-    {
-        int size = adj.length * adj.length;
-        int[] closeness = new int[size];
-        for (int vertex = 0; vertex < adj.length; vertex++) {
-            boolean[] visited = new boolean[size];
-            PriorityQueue<Integer> pq = new PriorityQueue<Integer>(size);
-            
-            pq.add(vertex);
-            while (!pq.isEmpty()) {
-                int u = pq.remove();
-                if(!visited[u]) {
-                    visited[u] = true;
-                    for (int i = 0; i < size; i++) {
-                        //Priority Queue speeds up extract-min
-                        if (!visited[i]) {
-                            if (adj[u][i] > 0) {
-                                pq.add(adj[u][i]+1);
-                            } 
+    public int[] getClosenessCentrality(int[][] adj){
+    	int size = adj.length * adj.length;
+    	int[] closeness = new int[size];
+    	for (int vertex = 0; vertex < adj.length; vertex++) {
+    		boolean[] visited = new boolean[size];
+    		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(size);
+    		
+
+    		pq.add(vertex);
+    		
+    		
+    		while (!pq.isEmpty()) {
+    			int u = pq.remove();
+    			if(!visited[u]) {
+    				visited[u] = true;
+    				for (int i = 0; i < size; i++) {
+    					//Priority Queue speeds up extract-min
+    					if (!visited[i]) {
+    						if (adj[u][i] > 0) {
+    							pq.add(adj[u][i]+1);
+    						} 
+
+    					}
+    				}
+    				closeness[vertex] += 1;
     			}
-    		    }
-    		    closeness[vertex] += 1;
+    			
     		}
-    	    }
-        }	
+		}
+		
         return closeness;
     }
     

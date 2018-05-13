@@ -1,7 +1,6 @@
 
 import java.util.*;
 
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 
 import java.io.*;
 /**
@@ -13,7 +12,7 @@ import java.io.*;
 public class FileData
 {    
     private String filename;
-    private ArrayList<String> nodes;
+    private ArrayList<int[]> nodes;
     private int[][] ajMatrix;
     /**
      * initialise data to work with
@@ -22,15 +21,15 @@ public class FileData
     public FileData(int whichFile) throws Exception
     {
     	
-        ArrayList<String> nodes = readFile(whichFile);
-        //ajMatrix = generateAjMatrix(filename);
+        nodes = readFile(whichFile);
+        ajMatrix = generateAdjMatrix();
     }
     /**
      * input 1, to read 42833.edges.txt
      * input 2, to read 78813.edges.txt
      * Doing this allows distinction between which file you are using
      */
-    private ArrayList<String> readFile(int whichFile) throws Exception{
+    private ArrayList<int[]> readFile(int whichFile) throws Exception{
         try{
             if(whichFile == 1){
                 System.out.println(System.getProperty("user.dir"));
@@ -50,14 +49,18 @@ public class FileData
     }
     
     
-    private ArrayList<String> readFileHelper(String filename) throws Exception{
+    private ArrayList<int[]> readFileHelper(String filename) throws Exception{
 
-        ArrayList<String> nodes = new ArrayList<String>();
+        ArrayList<int[]> nodes = new ArrayList<int[]>();
         try(BufferedReader reader = new BufferedReader(new FileReader(filename)))
         {
             String line;
             while((line = reader.readLine()) != null) {
-                nodes.add(line);
+            	String[] l = line.split(" ");
+            	int[] array = new int[2];
+            	array[0] = Integer.parseInt(l[0]);
+            	array[1] = Integer.parseInt(l[1]);
+                nodes.add(array);
             }
             reader.close();
         }
@@ -84,6 +87,24 @@ public class FileData
         return null;
     }
     
+    
+    private int[][] generateAdjMatrix() {
+    	int[][] adj;
+    	Set<Integer> vertices = new HashSet<Integer>();
+    	for (int[] line: nodes) {
+    		int[] vertex = line;
+    		if (!vertices.contains(vertex[0])) {
+    			vertices.add(vertex[0]);
+    		}
+    		if (!vertices.contains(vertex[1])) {
+    			vertices.add(vertex[1]);
+    		}
+
+		}
+    	adj = new int[vertices.size()][vertices.size()];
+		return adj;
+    	
+    }
     public String getFileName() {
         return filename;
     }
@@ -98,7 +119,12 @@ public class FileData
         return nodeNumbers;
     }
     */
-    public ArrayList<String> getNodes() {
+    public ArrayList<int[]> getNodes() {
+    	System.out.print("[");
+    	for (int[] list: nodes) {
+    		System.out.print("[" + list[0] + "," + list[1] + "],");
+    	}
+    	System.out.println("]");
     	return nodes;
     }
 }
