@@ -1,4 +1,5 @@
 import java.util.*;
+
 /**
  * This is the big boy class. all the centrality work is calculated here
  * But! dont make it too big! you can use helper classes too if nessessary!
@@ -49,10 +50,40 @@ public class Centrality
         //print all the nodes, with their associated values
         System.out.println(nodesIndex.entrySet());
     }
-    
-    
-    public Node[] getClosenessCentrality(){
-        return null;
+
+	
+    //adj is edgeMatrix
+    public int[] getClosenessCentrality(int[][] adj){
+    	int size = adj.length * adj.length;
+    	int[] closeness = new int[size];
+    	for (int vertex = 0; vertex < adj.length; vertex++) {
+    		boolean[] visited = new boolean[size];
+    		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(size);
+    		
+
+    		pq.add(vertex);
+    		
+    		
+    		while (!pq.isEmpty()) {
+    			int u = pq.remove();
+    			if(!visited[u]) {
+    				visited[u] = true;
+    				for (int i = 0; i < size; i++) {
+    					//Priority Queue speeds up extract-min
+    					if (!visited[i]) {
+    						if (adj[u][i] > 0) {
+    							pq.add(adj[u][i]+1);
+    						} 
+
+    					}
+    				}
+    				closeness[vertex] += 1;
+    			}
+    			
+    		}
+		}
+		
+        return closeness;
     }
     
     /**

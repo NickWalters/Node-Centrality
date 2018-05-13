@@ -7,11 +7,14 @@
  */
 public class main
 {
-    public main()
+    public static void main(String[] args) throws Exception
     {
         // read the file data for 428333.edges.txt
-        FileData data428333 = new FileData();
-        data428333.readFile(1);
+        FileData data428333 = new FileData(1);
+        Centrality c4 = new Centrality(data428333);
+        c4.getDegreeCentrality(data428333.readFile(1));
+        c4.getClosenessCentrality();
+        
         //int[] matrix = data428333.getAjMatrix();
         //ArrayList<Integer> nodesUnique = data428333.getUniqueNodes();
         // run the 4 centrality measures, also time performance
@@ -32,8 +35,14 @@ public class main
         
         
         // read the file data for 78813.edges.txt
-        FileData data78813 = new FileData();
-        data78813.readFile(2);
+        try {
+            FileData data78813 = new FileData(2);
+            data78813.readFile(2);
+        }
+        catch (Exception e) {
+
+
+        }
         //data78813.getAjMatrix();
     }
 }
