@@ -51,38 +51,33 @@ public class Centrality
         System.out.println(nodesIndex.entrySet());
     }
 
-	
+    
     //adj is edgeMatrix
-    public int[] getClosenessCentrality(int[][] adj){
-    	int size = adj.length * adj.length;
-    	int[] closeness = new int[size];
-    	for (int vertex = 0; vertex < adj.length; vertex++) {
-    		boolean[] visited = new boolean[size];
-    		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(size);
-    		
-
-    		pq.add(vertex);
-    		
-    		
-    		while (!pq.isEmpty()) {
-    			int u = pq.remove();
-    			if(!visited[u]) {
-    				visited[u] = true;
-    				for (int i = 0; i < size; i++) {
-    					//Priority Queue speeds up extract-min
-    					if (!visited[i]) {
-    						if (adj[u][i] > 0) {
-    							pq.add(adj[u][i]+1);
-    						} 
-
-    					}
-    				}
-    				closeness[vertex] += 1;
+    public int[] getClosenessCentrality(int[][] adj)
+    {
+        int size = adj.length * adj.length;
+        int[] closeness = new int[size];
+        for (int vertex = 0; vertex < adj.length; vertex++) {
+            boolean[] visited = new boolean[size];
+            PriorityQueue<Integer> pq = new PriorityQueue<Integer>(size);
+            
+            pq.add(vertex);
+            while (!pq.isEmpty()) {
+                int u = pq.remove();
+                if(!visited[u]) {
+                    visited[u] = true;
+                    for (int i = 0; i < size; i++) {
+                        //Priority Queue speeds up extract-min
+                        if (!visited[i]) {
+                            if (adj[u][i] > 0) {
+                                pq.add(adj[u][i]+1);
+                            } 
     			}
-    			
+    		    }
+    		    closeness[vertex] += 1;
     		}
-		}
-		
+    	    }
+        }	
         return closeness;
     }
     
