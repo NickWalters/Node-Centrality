@@ -139,7 +139,7 @@ public class Centrality
                     delta[w] = delta[w] + ((sigma[w])/ (sigma[v]))*(1+ delta[v]);
                 }
                 if(v != startingNode){
-                    betweenessArray[v] += (float)delta[v];
+                    betweenessArray[v] += delta[v];
                 }
             }
         }
