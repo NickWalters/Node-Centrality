@@ -2,7 +2,7 @@
 /**
  * The main method which prints final outputs and ties together all classes
  *
- * @author Nicholas Walters
+ * @author Nicholas Walters and James Caldon 2226341
  * @version 9 May 2018
  */
 public class main

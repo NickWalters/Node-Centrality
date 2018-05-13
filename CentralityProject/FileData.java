@@ -6,7 +6,7 @@ import java.io.*;
 /**
  * This class reads the text files containing the nodes, and prints output
  *
- * @author (Nicholas Walters)
+ * @author (Nicholas Walters and James Caldon 22226341)
  * @version 9 May 2018
  */
 public class FileData

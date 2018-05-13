@@ -5,7 +5,7 @@ import java.util.Map.Entry;
  * This is the big boy class. all the centrality work is calculated here
  * But! dont make it too big! you can use helper classes too if nessessary!
  *
- * @author Nicholas Walters
+ * @author Nicholas Walters and James Caldon 22226341
  * @version 9 May 2018 (last change by Nick)
  */
 public class Centrality
