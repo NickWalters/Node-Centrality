@@ -1,6 +1,8 @@
 import java.util.*;
 import java.util.Map.Entry;
 
+import sun.security.krb5.internal.crypto.dk.AesDkCrypto;
+
 /**
  * This is the big boy class. all the centrality work is calculated here
  * But! dont make it too big! you can use helper classes too if nessessary!
@@ -55,9 +57,10 @@ public class Centrality
 	
     //adj is edgeMatrix
     public int[] getClosenessCentrality(int[][] adj){
-    	int size = adj.length * adj.length;
+    	int size = adj.length;
     	int[] closeness = new int[size];
-    	for (int vertex = 0; vertex < adj.length; vertex++) {
+    	//for (int vertex = 0; vertex < adj.length; vertex++) {
+    	int vertex = 0;
     		boolean[] visited = new boolean[size];
     		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(size);
     		
@@ -82,8 +85,11 @@ public class Centrality
     			}
     			
     		}
+		//}
+		for (int i = 0; i < closeness.length; i++) {
+			System.out.print(closeness[i] + ", ");
+			
 		}
-		
         return closeness;
     }
     
