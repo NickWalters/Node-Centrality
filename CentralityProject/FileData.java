@@ -78,21 +78,6 @@ public class FileData
         return nodes;
     }
     
-    // not finished
-    private int[][] generateAjMatrix(String filename) throws FileNotFoundException {
-        File file = new File(filename);
-        Scanner fileReader = new Scanner(file);
-        fileReader.useDelimiter(" |\\n");
-        int numVertex = 0;
-        int[][] edgeMatrix = new int[numVertex][numVertex];
-        while(fileReader.hasNext()){
-            int x = Integer.parseInt(fileReader.next());
-            int y = Integer.parseInt(fileReader.next());
-        }
-        
-        return null;
-    }
-    
     /**
 	 * @author James
 	 * holds reference to the vertex and its weight
@@ -149,17 +134,12 @@ public class FileData
 		return adj;
     	
     }
+    
     public String getFileName() {
         return filename;
     }
    
-<<<<<<< HEAD
-    public int[][] getAjMatrix(){
-        
-=======
     public int[][] getAdjMatrix(){
-
->>>>>>> 5e30e3fcc75f520507f9375f4541a889c022efba
         return ajMatrix;
     }
     

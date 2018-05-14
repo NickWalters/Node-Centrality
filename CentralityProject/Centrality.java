@@ -90,10 +90,6 @@ public class Centrality
 			System.out.print(closeness[i] + ", ");
 			
 		}
-<<<<<<< HEAD
-	
-=======
->>>>>>> 5e30e3fcc75f520507f9375f4541a889c022efba
         return closeness;
     }
     
