@@ -110,7 +110,7 @@ public class FileData
     }
    
     public int[][] getAjMatrix(){
-
+        
         return ajMatrix;
     }
     

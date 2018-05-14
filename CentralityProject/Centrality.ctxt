@@ -1,16 +1,13 @@
 #BlueJ class context
 comment0.target=Centrality
-comment0.text=\n\ This\ is\ the\ big\ boy\ class.\ all\ the\ centrality\ work\ is\ calculated\ here\n\ But\!\ dont\ make\ it\ too\ big\!\ you\ can\ use\ helper\ classes\ too\ if\ nessessary\!\n\n\ @author\ Nicholas\ Walters\n\ @version\ 9\ May\ 2018\ (last\ change\ by\ Nick)\n
+comment0.text=\n\ This\ is\ the\ big\ boy\ class.\ all\ the\ centrality\ work\ is\ calculated\ here\n\ But\!\ dont\ make\ it\ too\ big\!\ you\ can\ use\ helper\ classes\ too\ if\ nessessary\!\n\n\ @author\ Nicholas\ Walters\ and\ James\ Caldon\ 22226341\n\ @version\ 9\ May\ 2018\ (last\ change\ by\ Nick)\n
 comment1.params=info
 comment1.target=Centrality(FileData)
-comment2.params=nodes
-comment2.target=void\ getDegreeCentrality(java.util.ArrayList)
-comment2.text=\n\ returns\ the\ degree\ centrality\ of\ a\ given\ graph\n\ @param\ matrixOfGraph,\ the\ matrix\ representation\ of\ graph/text\ file\n\ @param\ allNodesUnique,\ a\ list\ containing\ info\ of\ all\ distinct\ nodes\n
-comment3.params=adj
-comment3.target=int[]\ getClosenessCentrality(int[][])
-comment4.params=edgeMatrix
-comment4.target=float[]\ getBetweenessCentrality(int[][])
-comment4.text=\n\ Brandes\ algorithm\ is\ the\ most\ efficient\ algorithm\ for\ betweeness\ Centrality\n\ this\ runs\ in\ O(nm)\ time,\ compared\ to\ all\ other\ algorithms\ which\ require\ O(n^3)\ time\ for\ unweighted\ graphs\n
-comment5.params=
-comment5.target=Node[]\ getKatzCentrality()
-numComments=6
+comment2.params=adj
+comment2.target=int[]\ getClosenessCentrality(int[][])
+comment3.params=edgeMatrix
+comment3.target=float[]\ getBetweenessCentrality(int[][])
+comment3.text=\n\ Brandes\ algorithm\ is\ the\ most\ efficient\ algorithm\ for\ betweeness\ Centrality\n\ this\ runs\ in\ O(nm)\ time,\ compared\ to\ all\ other\ algorithms\ which\ require\ O(n^3)\ time\ for\ unweighted\ graphs\n
+comment4.params=
+comment4.target=Node[]\ getKatzCentrality()
+numComments=5
