@@ -99,7 +99,7 @@ public class Centrality
      */
     public float[] getBetweenessCentrality(int[][] edgeMatrix){
        int numNodes = edgeMatrix.length;
-       float[] betweenessArray = new float[numNodes];
+       float[] betweenessCentralities = new float[numNodes];
         // Brandes algorithm O(EV^2) for UNWEIGHTED graphs: 
         // Brandes algorithm : https://people.csail.mit.edu/jshun/6886-s18/papers/BrandesBC.pdf
         
@@ -177,12 +177,13 @@ public class Centrality
                     delta[w] = delta[w] + ((sigma[w])/ (sigma[v]))*(1+ delta[v]);
                 }
                 if(v != startingNode){
-                    betweenessArray[v] += delta[v];
+                    betweenessCentralities[v] += delta[v];
                 }
             }
         }
-        return betweenessArray;
+        return betweenessCentralities;
     }
+    
     
     
     public Node[] getKatzCentrality(){
