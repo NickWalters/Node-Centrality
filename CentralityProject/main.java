@@ -1,4 +1,6 @@
  import java.util.*;
+
+import com.sun.javafx.collections.FloatArraySyncer;
 /**
  * The main method which prints final outputs and ties together all classes
  *
@@ -16,9 +18,19 @@ public class main
         //c4.getClosenessCentrality(data428333.getAdjMatrix());
     	
     	
-        FileData testdata = new FileData(3);
-        Centrality c4 = new Centrality(testdata);
-        c4.getClosenessCentrality(testdata.getAdjMatrix());
+        Graph testGraph = new Graph("test.txt");
+        Centrality c4 = new Centrality();
+        float[] closeness = c4.getClosenessCentrality(testGraph);
+    	for (int i = 0; i < closeness.length; i++) {
+			System.out.println(closeness[i]);
+		}
+        /**
+        float[] floatArray = c4.getBetweenessCentrality(testGraph);
+        System.out.println(testGraph);
+        for (float f : floatArray) {
+			System.out.println(f);
+		}
+		**/
         //int[] matrix = data428333.getAjMatrix();
         //ArrayList<Integer> nodesUnique = data428333.getUniqueNodes();
         // run the 4 centrality measures, also time performance

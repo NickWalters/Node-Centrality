@@ -4,3 +4,7 @@
 /Node.class
 /main.class
 /FileData$Node.class
+/Graph.class
+/Centrality$Node.class
+/Centrality$NodeComparator.class
+/Centrality$Node$NodeComparator.class
