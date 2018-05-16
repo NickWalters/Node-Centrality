@@ -15,7 +15,7 @@ public class Centrality
     // instance variables - replace the example below with your own
     ArrayList<Integer> array;
     
-    public Centrality(FileData info)
+    public Centrality()
     {
         //array = info.readFile(1);
     }
@@ -53,35 +53,66 @@ public class Centrality
         System.out.println(nodesIndex.entrySet());
         return nodesIndex.entrySet();
     }
-
+    
+	/**
+	 * @author James
+	 * holds reference to the vertex and its weight
+	 */
+    
+	public class Node {
+		public final Integer v;
+		public final Integer w;
+		Node (Integer vertex, Integer weight) {
+			v = vertex;
+			w = weight;
+		}
+	}
 	
-    //adj is edgeMatrix
-    public int[] getClosenessCentrality(int[][] adj){
-    	int size = adj.length;
+	/**
+	 * @author James
+	 * Comparator for two nodes, used by the priority queue
+	 * the highest priority is the lower value
+	 */
+	public class NodeComparator implements Comparator<Node>{
+
+		@Override
+		public int compare(Node o1, Node o2) {
+			if (o1.w < o2.w) return -1;
+			else if (o1.w > o2.w) return 1;
+			return 0;
+		}	
+		
+	}
+	/*
+    adj is edgeMatrix rip effieciency
+    public int[] getClosenessCentrality(Graph g) {
+    	int[][] adj = g.getAdjMatrix();
+    	int size = g.getNumberOfVertices();
+    	System.out.println(g);
     	int[] closeness = new int[size];
     	//for (int vertex = 0; vertex < adj.length; vertex++) {
     	int vertex = 0;
     		boolean[] visited = new boolean[size];
-    		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(size);
+    		PriorityQueue<Node> pq = new PriorityQueue<Node>(size, new NodeComparator());
     		
-
-    		pq.add(vertex);
+    		
+    		pq.add(new Node(vertex, 0));
     		
     		
     		while (!pq.isEmpty()) {
-    			int u = pq.remove();
-    			if(!visited[u]) {
-    				visited[u] = true;
+    			Node u = pq.remove();
+    			if(!visited[u.v]) {
+    				visited[u.v] = true;
     				for (int i = 0; i < size; i++) {
     					//Priority Queue speeds up extract-min
     					if (!visited[i]) {
-    						if (adj[u][i] > 0) {
-    							pq.add(adj[u][i]+1);
+    						if (adj[u.v][i] > 0) {
+    							pq.add(new Node(i, adj[u.v][i]+u.w));
     						} 
 
     					}
     				}
-    				closeness[vertex] += 1;
+    				closeness[vertex] = u.w;
     			}
     			
     		}
@@ -92,14 +123,55 @@ public class Centrality
 		}
         return closeness;
     }
+    */
+    
+	/**Uses adjacency list instead for that extra effieciency. Complexity O((|E| + |V|) * |V|).
+	 * 
+	 * @param g
+	 * @return
+	 */
+    public float[] getClosenessCentrality(Graph g) {
+    	ArrayList<HashSet<Integer>> adj = g.getAdjList();
+    	int size = g.getNumberOfVertices();
+    	System.out.println(g);
+    	float[] closeness = new float[size];
+    	for (int vertex = 0; vertex < size; vertex++) {
+
+	    	int[][] distance = new int[size][2];
+	    	for (int i = 0; i < size; i++) {
+				distance[i][0] = -1;
+			}
+	    	distance[vertex][0] = 0;
+	    	Queue<Integer> pq = new LinkedList<Integer>();
+	
+	    	pq.add(vertex);
+	    	
+	    	while (!pq.isEmpty()) {
+	    		int v = pq.poll();
+	    		HashSet<Integer> adjacent = adj.get(v);
+	    		for (Integer i : adjacent) {
+	    			if(distance[i][0] == -1) {
+						distance[i][0] = distance[v][0] + 1;
+						distance[i][1] = v;
+						pq.add(i);
+	    			}
+				}
+	    		closeness[vertex] += distance[v][0];
+	    	
+	    	}
+	    	closeness[vertex] = 1/closeness[vertex]; 
+    	}
+        return closeness;
+    }
     
     /**
      * Brandes algorithm is the most efficient algorithm for betweeness Centrality
      * this runs in O(nm) time, compared to all other algorithms which require O(n^3) time for unweighted graphs
      */
-    public float[] getBetweenessCentrality(int[][] edgeMatrix){
-       int numNodes = edgeMatrix.length;
-       float[] betweenessCentralities = new float[numNodes];
+    public float[] getBetweenessCentrality(Graph g){
+    	int[][] edgeMatrix = g.getAdjMatrix();
+	    int numNodes = edgeMatrix.length;
+	    float[] betweenessCentralities = new float[numNodes];
         // Brandes algorithm O(EV^2) for UNWEIGHTED graphs: 
         // Brandes algorithm : https://people.csail.mit.edu/jshun/6886-s18/papers/BrandesBC.pdf
         
