@@ -52,15 +52,5 @@ public class main
         //data78813.getAjMatrix();
     }
     
-    public void printTopFive(int[] array){
-        Arrays.sort(array);
-        for(int i=0; i<5; i++){
-            System.out.println(array[i]);
-            System.out.println();
-        }
-    }
-    
-    public void printTopFive(float[] array){
-        
-    }
+
 }
