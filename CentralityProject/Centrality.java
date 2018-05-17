@@ -2,7 +2,6 @@ import java.awt.geom.GeneralPath;
 import java.util.*;
 import java.util.Map.Entry;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import sun.security.krb5.internal.crypto.dk.AesDkCrypto;
 
@@ -17,10 +16,25 @@ public class Centrality
 {
     // instance variables - replace the example below with your own
     ArrayList<Integer> array;
+    private int numVertices;
+    private int[][] edgeMatrix;
+    private float[] betweenessCentralities;
+    private HashMap<Integer, Integer> degreeCentralities;
+    private float[] katzCentralities;
+    private int[][] weightsOfShortestPaths;
     
-    public Centrality()
+    
+
+    
+    public Centrality(FileData data)
     {
         //array = info.readFile(1);
+        
+        ArrayList<int[]> n = data.getNodes();
+        degreeCentralities = getDegreeCentrality(n);
+        numVertices = getNumVertices();
+        betweenessCentralities = new float[numVertices];
+        weightsOfShortestPaths = new int[numVertices][numVertices];
     }
     
     // EDIT, changed to use an arraylist filled with arrays of ints (no parsing needed)- James
@@ -29,7 +43,7 @@ public class Centrality
      * @param matrixOfGraph, the matrix representation of graph/text file
      * @param allNodesUnique, a list containing info of all distinct nodes
      */
-    public Set<Entry<Integer, Integer>> getDegreeCentrality(ArrayList<int[]> nodes){
+    public HashMap<Integer, Integer> getDegreeCentrality(ArrayList<int[]> nodes){
         HashMap<Integer, Integer> nodesIndex = new HashMap<>();
         //indexNodes not used
         HashMap<Integer, Integer> indexNodes = new HashMap<>();
@@ -54,7 +68,8 @@ public class Centrality
         }
         //print all the nodes, with their associated values
         System.out.println(nodesIndex.entrySet());
-        return nodesIndex.entrySet();
+        numVertices = nodesIndex.size();
+        return nodesIndex;
     }
     
 	/**
@@ -177,10 +192,11 @@ public class Centrality
     public float[] getBetweenessCentrality(Graph g){
     	int[][] edgeMatrix = g.getAdjMatrix();
 	    int numNodes = edgeMatrix.length;
-	    float[] betweenessCentralities = new float[numNodes];
+	    
         // Brandes algorithm O(EV^2) for UNWEIGHTED graphs: 
         // Brandes algorithm : https://people.csail.mit.edu/jshun/6886-s18/papers/BrandesBC.pdf
         
+        java.util.Stack<Integer> stack;
         // assign the shortest paths list to use later on. Corresponds to P on paper
         ArrayList paths[] = new ArrayList[numNodes];
         // create a sigma list according to paper (σ)
@@ -196,7 +212,7 @@ public class Centrality
         // beginning with the starting node, for all Vertex V which is an element of the graph G do:
         for(int startingNode = 0; startingNode < numNodes; startingNode++)
         {
-            Stack<Integer> stack = new Stack<Integer>();
+            stack = new java.util.Stack<Integer>();
             distances = new int[numNodes];
             for(int i = 0; i<numNodes; i++)
             {
@@ -209,7 +225,7 @@ public class Centrality
             
             queue = new ArrayDeque<Integer>();
             queue.add(startingNode);
-            int v = 0; // current Node/Vertex
+            int v; // current Node/Vertex
             // while Q not empty do:
             while(!queue.isEmpty())
             {
@@ -221,7 +237,7 @@ public class Centrality
                 {
                     if(edgeMatrix[v][currentNeighbor] == 1)
                     {
-                        if(distances[v]<0)
+                        if(distances[currentNeighbor]<0)
                         {
                             queue.add(currentNeighbor);
                             distances[currentNeighbor] = distances[v]+1;
@@ -232,6 +248,7 @@ public class Centrality
                             paths[currentNeighbor].add(v);
                         }
                     }
+                    weightsOfShortestPaths[v] = distances;
                 }
             }
             
@@ -252,15 +269,17 @@ public class Centrality
                 while(pathIterator.hasNext())
                 {
                     w = pathIterator.next();
-                    delta[w] = delta[w] + ((sigma[w])/ (sigma[v]))*(1+ delta[v]);
+                    delta[w] += (float)((float)(sigma[w])/ (float)(sigma[v]))*(float)(1+ delta[v]);
                 }
                 if(v != startingNode){
-                    betweenessCentralities[v] += delta[v];
+                    betweenessCentralities[v] += (float)delta[v];
                 }
             }
         }
         return betweenessCentralities;
     }
+    
+    
     
     
     
@@ -320,4 +339,23 @@ public class Centrality
         return null;
     	
     }
+    
+    
+    public int getNumVertices(){
+        return numVertices;
+    }
+    
+    
+    public void calculateKatz(float katzConstant){
+        for(int i=0; i<numVertices; i++){
+            for(int r=0; r<numVertices; r++){
+                katzCentralities[i] += ((float)degreeCentralities.get(r))*Math.pow(katzConstant, weightsOfShortestPaths[i][r]);
+            }
+        }
+    }
+    
+    public float[] returnKatzCentrality(){
+        return katzCentralities;
+    }
 }
+
