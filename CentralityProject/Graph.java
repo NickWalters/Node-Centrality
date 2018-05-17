@@ -4,9 +4,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * 
@@ -22,7 +19,7 @@ public class Graph {
 	private ArrayList<int[]> edges = new ArrayList<>();
 	private String filename;
 	private ArrayList<HashSet<Integer>> adjList = new ArrayList<>();
-
+	private Hashtable<Integer,Integer> vertices = new Hashtable<Integer, Integer>();
 	/**
 	 * @throws FileNotFoundException 
 	 * 
@@ -64,11 +61,13 @@ public class Graph {
     		int[] vertex = line;
     		if (!vertices.containsKey(vertex[0])) {
     			vertices.put(vertex[0], count);
+    			this.vertices.put(count, vertex[0]);
     			adjList.add(count, new HashSet<>());
     			count++;
     		}
     		if (!vertices.containsKey(vertex[1])) {
     			vertices.put(vertex[1], count);
+    			this.vertices.put(count, vertex[1]);
     			adjList.add(count, new HashSet<>());
     			count++;
     		}
@@ -115,6 +114,11 @@ public class Graph {
 			adjMatrixClone[i] = adjMatrix[i].clone(); 
 		}
         return adjMatrixClone;
+    }
+    
+    
+    public int getVertex(int index) {
+        return vertices.get(index);
     }
     
     public ArrayList<HashSet<Integer>> getAdjList(){

@@ -1,5 +1,8 @@
+import java.awt.geom.GeneralPath;
 import java.util.*;
 import java.util.Map.Entry;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import sun.security.krb5.internal.crypto.dk.AesDkCrypto;
 
@@ -61,8 +64,8 @@ public class Centrality
     
 	public class Node {
 		public final Integer v;
-		public final Integer w;
-		Node (Integer vertex, Integer weight) {
+		public final Float w;
+		Node (Integer vertex, Float weight) {
 			v = vertex;
 			w = weight;
 		}
@@ -77,8 +80,8 @@ public class Centrality
 
 		@Override
 		public int compare(Node o1, Node o2) {
-			if (o1.w < o2.w) return -1;
-			else if (o1.w > o2.w) return 1;
+			if (o1.w < o2.w) return 1;
+			else if (o1.w > o2.w) return -1;
 			return 0;
 		}	
 		
@@ -130,11 +133,12 @@ public class Centrality
 	 * @param g
 	 * @return
 	 */
-    public float[] getClosenessCentrality(Graph g) {
+    public Integer getClosenessCentrality(Graph g) {
     	ArrayList<HashSet<Integer>> adj = g.getAdjList();
     	int size = g.getNumberOfVertices();
     	System.out.println(g);
     	float[] closeness = new float[size];
+    	PriorityQueue<Node> pq = new PriorityQueue<>(new NodeComparator());
     	for (int vertex = 0; vertex < size; vertex++) {
 
 	    	int[][] distance = new int[size][2];
@@ -142,26 +146,28 @@ public class Centrality
 				distance[i][0] = -1;
 			}
 	    	distance[vertex][0] = 0;
-	    	Queue<Integer> pq = new LinkedList<Integer>();
+	    	Queue<Integer> q = new LinkedList<Integer>();
 	
-	    	pq.add(vertex);
+	    	q.add(vertex);
 	    	
-	    	while (!pq.isEmpty()) {
-	    		int v = pq.poll();
+	    	while (!q.isEmpty()) {
+	    		int v = q.poll();
 	    		HashSet<Integer> adjacent = adj.get(v);
 	    		for (Integer i : adjacent) {
 	    			if(distance[i][0] == -1) {
 						distance[i][0] = distance[v][0] + 1;
 						distance[i][1] = v;
-						pq.add(i);
+						q.add(i);
 	    			}
 				}
 	    		closeness[vertex] += distance[v][0];
 	    	
 	    	}
+	    	
+	    	pq.add(new Node(vertex, 1/closeness[vertex]));
 	    	closeness[vertex] = 1/closeness[vertex]; 
     	}
-        return closeness;
+        return g.getVertex(pq.poll().v);
     }
     
     /**
@@ -258,7 +264,60 @@ public class Centrality
     
     
     
-    public Node[] getKatzCentrality(){
+    @SuppressWarnings("unchecked")
+	public double[] getKatzCentrality(Graph g){
+    	ArrayList<HashSet<Integer>> adjList = g.getAdjList();
+    	int[][] adjMatrix = g.getAdjMatrix();
+    	int size = g.getNumberOfVertices();
+    	System.out.println(g);
+    	double alpha = 1.0;
+    	double[] catz = new double[size];
+    	int currentVertex = 0;
+    	
+    	
+    	for (int i = 0; i < 100; i++) {
+			//lastVertex = currentVertex;
+			//currentVertex = lastVertex;
+			
+		}
+    	
+    	//for (int vertex = 0; vertex < size; vertex++) {
+    	int vertex = 1;
+    		@SuppressWarnings("rawtypes")
+			ArrayList shortestPaths[] = new ArrayList[size];
+    		for (int i = 0; i < size; i++) {
+				shortestPaths[i] = new ArrayList<Integer>();
+			}
+	    	int[][] distance = new int[size][2];
+	    	for (int i = 0; i < size; i++) {
+				distance[i][0] = -1;
+				distance[i][1] = -1;
+			}
+	    	distance[vertex][0] = 0;
+	    	Queue<Integer> pq = new LinkedList<Integer>();
+	
+	    	pq.add(vertex);
+	    	
+	    	while (!pq.isEmpty()) {
+	    		int v = pq.poll();
+	    		HashSet<Integer> adjacent = adjList.get(v);
+	    		for (Integer i : adjacent) {
+	    			if(distance[i][0] == -1) {
+						distance[i][0] = distance[v][0] + 1;
+						distance[i][1] = v;
+						shortestPaths[i].add(v);
+						
+						System.out.println(i + ": " + v + "| ");
+						
+						pq.add(i);
+	    			}
+				}
+	    	
+	    	}
+	    	
+    	//}
+
         return null;
+    	
     }
 }

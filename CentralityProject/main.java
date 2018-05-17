@@ -20,10 +20,12 @@ public class main
     	
         Graph testGraph = new Graph("test.txt");
         Centrality c4 = new Centrality();
-        float[] closeness = c4.getClosenessCentrality(testGraph);
-    	for (int i = 0; i < closeness.length; i++) {
-			System.out.println(closeness[i]);
-		}
+        Integer closeness = c4.getClosenessCentrality(testGraph);
+        System.out.println(closeness);
+    	//for (int i = 0; i < closeness.length; i++) {
+			//System.out.println(closeness[i]);
+		//}
+    	double[] closenesss = c4.getKatzCentrality(testGraph);
         /**
         float[] floatArray = c4.getBetweenessCentrality(testGraph);
         System.out.println(testGraph);
