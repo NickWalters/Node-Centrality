@@ -28,11 +28,11 @@ public class Centrality
     
 
     
-    public Centrality(FileData data)
+    public Centrality(Graph data)
     {
         //array = info.readFile(1);
         
-        ArrayList<int[]> n = data.getNodes();
+        ArrayList<int[]> n = data.getEdges();
         degreeCentralities = getDegreeCentrality(n);
         numVertices = getNumVertices();
         betweenessCentralities = new float[numVertices];
@@ -42,6 +42,7 @@ public class Centrality
     
     // EDIT, changed to use an arraylist filled with arrays of ints (no parsing needed)- James
     /**
+     * @author Nick
      * returns the degree centrality of a given graph
      * @param matrixOfGraph, the matrix representation of graph/text file
      * @param allNodesUnique, a list containing info of all distinct nodes
@@ -194,6 +195,7 @@ public class Centrality
     }
     
     /**
+     * @author Nick
      * Brandes algorithm is the most efficient algorithm for betweeness Centrality
      * this runs in O(nm) time, compared to all other algorithms which require O(n^3) time for unweighted graphs
      */
@@ -207,9 +209,9 @@ public class Centrality
         java.util.Stack<Integer> stack;
         // assign the shortest paths list to use later on. Corresponds to P on paper
         ArrayList paths[] = new ArrayList[numNodes];
-        // create a sigma list according to paper (σ)
+        // create a sigma list according to paper (Ïƒ)
         float sigma[] = new float[numNodes];
-        // create a delta list according to paper (δ)
+        // create a delta list according to paper (Î´)
         float[] delta = new float[numNodes];
         // holds the distance for each iteration of the paths
         int distances[];
@@ -262,7 +264,7 @@ public class Centrality
             
             for(int i = 0; i< numNodes; i++)
             {
-                //δ[v] = 0, for all vertex thats an element of Graph
+                //Î´[v] = 0, for all vertex thats an element of Graph
                 delta[i] = 0;
             }
             
@@ -305,9 +307,9 @@ public class Centrality
         ArrayList paths[] = new ArrayList[numNodes];
         
         int[][] shortestPaths = new int[numNodes][numNodes];
-        // create a sigma list according to paper (σ)
+        // create a sigma list according to paper (Ïƒ)
         float sigma[] = new float[numNodes];
-        // create a delta list according to paper (δ)
+        // create a delta list according to paper (Î´)
         float[] delta = new float[numNodes];
         // holds the distance for each iteration of the paths
         int distances[];
@@ -359,7 +361,7 @@ public class Centrality
             
             for(int i = 0; i< numNodes; i++)
             {
-                //δ[v] = 0, for all vertex thats an element of Graph
+                //Î´[v] = 0, for all vertex thats an element of Graph
                 delta[i] = 0;
             }
             
@@ -383,61 +385,6 @@ public class Centrality
             }
             shortestPaths[startingNode] = distances;
         }
-        
-    
-    
-    @SuppressWarnings("unchecked")
-	public double[] getKatzCentrality(Graph g){
-    	ArrayList<HashSet<Integer>> adjList = g.getAdjList();
-    	int[][] adjMatrix = g.getAdjMatrix();
-    	int size = g.getNumberOfVertices();
-    	System.out.println(g);
-    	double alpha = 1.0;
-    	double[] catz = new double[size];
-    	int currentVertex = 0;
-    	
-    	
-    	for (int i = 0; i < 100; i++) {
-			//lastVertex = currentVertex;
-			//currentVertex = lastVertex;
-			
-		}
-    	
-    	//for (int vertex = 0; vertex < size; vertex++) {
-    	int vertex = 1;
-    		@SuppressWarnings("rawtypes")
-			ArrayList shortestPaths[] = new ArrayList[size];
-    		for (int i = 0; i < size; i++) {
-				shortestPaths[i] = new ArrayList<Integer>();
-			}
-	    	int[][] distance = new int[size][2];
-	    	for (int i = 0; i < size; i++) {
-				distance[i][0] = -1;
-				distance[i][1] = -1;
-			}
-	    	distance[vertex][0] = 0;
-	    	Queue<Integer> pq = new LinkedList<Integer>();
-	
-	    	pq.add(vertex);
-	    	
-	    	while (!pq.isEmpty()) {
-	    		int v = pq.poll();
-	    		HashSet<Integer> adjacent = adjList.get(v);
-	    		for (Integer i : adjacent) {
-	    			if(distance[i][0] == -1) {
-						distance[i][0] = distance[v][0] + 1;
-						distance[i][1] = v;
-						shortestPaths[i].add(v);
-						
-						System.out.println(i + ": " + v + "| ");
-						
-						pq.add(i);
-	    			}
-				}
-	    	
-	    	}
-	    	
-    	//}
 
         double alpha = 0.5;		
         for (int i = 0; i < numNodes; i++) {
@@ -459,16 +406,7 @@ public class Centrality
         return numVertices;
     }
     
-    /*
-    public void calculateKatz(float katzConstant){
-        for(int i=0; i<numVertices; i++){
-            for(int r=0; r<numVertices; r++){
-                katzCentralities[i] += ((float)degreeCentralities.get(r))*Math.pow(katzConstant, weightsOfShortestPaths[i][r]);
-            }
-        }
-    }
-    */
-    
+
     public float[] returnKatzCentrality(){
         return katzCentralities;
     }

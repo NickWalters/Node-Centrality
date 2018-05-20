@@ -2,18 +2,17 @@
 comment0.target=Centrality
 comment0.text=\n\ This\ is\ the\ big\ boy\ class.\ all\ the\ centrality\ work\ is\ calculated\ here\n\ But\!\ dont\ make\ it\ too\ big\!\ you\ can\ use\ helper\ classes\ too\ if\ nessessary\!\n\n\ @author\ Nicholas\ Walters\ and\ James\ Caldon\ 22226341\n\ @version\ 9\ May\ 2018\ (last\ change\ by\ Nick)\n
 comment1.params=data
-comment1.target=Centrality(FileData)
+comment1.target=Centrality(Graph)
 comment2.params=g
-comment2.target=java.lang.Integer\ getClosenessCentrality(Graph)
+comment2.target=int[]\ getClosenessCentrality(Graph)
 comment2.text=Uses\ adjacency\ list\ instead\ for\ that\ extra\ effieciency.\ Complexity\ O((|E|\ +\ |V|)\ *\ |V|).\n\ \n\ @param\ g\n\ @return\n
 comment3.params=g
 comment3.target=float[]\ getBetweenessCentrality(Graph)
-comment3.text=\n\ Brandes\ algorithm\ is\ the\ most\ efficient\ algorithm\ for\ betweeness\ Centrality\n\ this\ runs\ in\ O(nm)\ time,\ compared\ to\ all\ other\ algorithms\ which\ require\ O(n^3)\ time\ for\ unweighted\ graphs\n
+comment3.text=\n\ @author\ Nick\n\ Brandes\ algorithm\ is\ the\ most\ efficient\ algorithm\ for\ betweeness\ Centrality\n\ this\ runs\ in\ O(nm)\ time,\ compared\ to\ all\ other\ algorithms\ which\ require\ O(n^3)\ time\ for\ unweighted\ graphs\n
 comment4.params=g
-comment4.target=double[]\ getKatzCentrality(Graph)
+comment4.target=int[]\ getKatzCentrality(Graph)
 comment5.params=
 comment5.target=int\ getNumVertices()
 comment6.params=
 comment6.target=float[]\ returnKatzCentrality()
-comment6.text=\n\ \ \ \ public\ void\ calculateKatz(float\ katzConstant){\n\ \ \ \ \ \ \ \ for(int\ i\=0;\ i<numVertices;\ i++){\n\ \ \ \ \ \ \ \ \ \ \ \ for(int\ r\=0;\ r<numVertices;\ r++){\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ katzCentralities[i]\ +\=\ ((float)degreeCentralities.get(r))*Math.pow(katzConstant,\ weightsOfShortestPaths[i][r]);\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ }\n\ \ \ \ }\n
 numComments=7
