@@ -35,6 +35,7 @@ public class Centrality
         numVertices = getNumVertices();
         betweenessCentralities = new float[numVertices];
         weightsOfShortestPaths = new int[numVertices][numVertices];
+        katzCentralities = new float[numVertices];
     }
     
     // EDIT, changed to use an arraylist filled with arrays of ints (no parsing needed)- James
@@ -345,7 +346,7 @@ public class Centrality
         return numVertices;
     }
     
-    
+    /*
     public void calculateKatz(float katzConstant){
         for(int i=0; i<numVertices; i++){
             for(int r=0; r<numVertices; r++){
@@ -353,6 +354,7 @@ public class Centrality
             }
         }
     }
+    */
     
     public float[] returnKatzCentrality(){
         return katzCentralities;
