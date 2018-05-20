@@ -17,8 +17,7 @@ public class main
         //c4.getDegreeCentrality(data428333.getNodes());
         //c4.getClosenessCentrality(data428333.getAdjMatrix());
     	
-    	
-<<<<<<< HEAD
+    	/*
         Graph testGraph = new Graph("test.txt");
         FileData data2 = new FileData(3);
         Centrality c4 = new Centrality(data2);
@@ -26,13 +25,14 @@ public class main
         System.out.println("---Closeness Centralities----");
         System.out.println(closeness);
         System.out.println("------------------------------");
-=======
+        
         Graph testGraph = new Graph("78813.edges.txt");
         Centrality c4 = new Centrality();
         int[] closeness = c4.getKatzCentrality(testGraph);
         for (int i : closeness) {
             System.out.println(i);
 		}
+		*/
 
     	//for (int i = 0; i < closeness.length; i++) {
 			//System.out.println(closeness[i]);
@@ -44,8 +44,8 @@ public class main
         //Centrality c4 = new Centrality(data);
         //Integer closeness = c4.getClosenessCentrality(testGraph);
         //System.out.println(closeness);
->>>>>>> 71050477b80be97e17389479f173c1b9cfb8cc22
         
+        /*
         Graph tg = new Graph("428333.edges.txt");
         FileData data = new FileData(1);
         Centrality c = new Centrality(data);
@@ -55,7 +55,7 @@ public class main
             System.out.println(item);
         }
         System.out.println("------------------------------");
-        
+        */
         
         
         
