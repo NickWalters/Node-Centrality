@@ -18,14 +18,18 @@ public class main
         //c4.getClosenessCentrality(data428333.getAdjMatrix());
     	
     	
-        Graph testGraph = new Graph("test.txt");
+        Graph testGraph = new Graph("78813.edges.txt");
         Centrality c4 = new Centrality();
-        Integer closeness = c4.getClosenessCentrality(testGraph);
-        System.out.println(closeness);
+        int[] closeness = c4.getKatzCentrality(testGraph);
+        for (int i : closeness) {
+            System.out.println(i);
+		}
+
     	//for (int i = 0; i < closeness.length; i++) {
 			//System.out.println(closeness[i]);
 		//}
-    	double[] closenesss = c4.getKatzCentrality(testGraph);
+    	//int closenesss = c4.getKatzCentrality(testGraph);
+    	//System.out.println(closenesss);
         /**
         float[] floatArray = c4.getBetweenessCentrality(testGraph);
         System.out.println(testGraph);
