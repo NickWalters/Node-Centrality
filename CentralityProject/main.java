@@ -30,6 +30,36 @@ public class main
 		//}
     	//int closenesss = c4.getKatzCentrality(testGraph);
     	//System.out.println(closenesss);
+        //Graph testGraph = new Graph("test.txt");
+        //FileData data = new FileData(3);
+        //Centrality c4 = new Centrality(data);
+        //Integer closeness = c4.getClosenessCentrality(testGraph);
+        //System.out.println(closeness);
+        
+        Graph tg = new Graph("428333.edges.txt");
+        FileData data = new FileData(1);
+        Centrality c = new Centrality(data);
+        float[] betweeness = c.getBetweenessCentrality(tg);
+        System.out.println("---Betweeness Centralities----");
+        for(float item: betweeness){
+            System.out.println(item);
+        }
+        System.out.println("------------------------------");
+        
+        c.calculateKatz(1);
+        System.out.println("---Katz Centralities----");
+        float[] katz = c.returnKatzCentrality();
+        for(float item: katz){
+            System.out.println(item);
+        }
+        System.out.println("------------------------------");
+        
+        
+        
+    	//for (int i = 0; i < closeness.length; i++) {
+			//System.out.println(closeness[i]);
+		//}
+    	//double[] closenesss = c4.getKatzCentrality(testGraph);
         /**
         float[] floatArray = c4.getBetweenessCentrality(testGraph);
         System.out.println(testGraph);
