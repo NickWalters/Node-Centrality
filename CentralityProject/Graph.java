@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /**
  * 
@@ -16,6 +19,8 @@ import java.util.Hashtable;
 public class Graph {
 
 	private int[][] adjMatrix;
+	private ArrayList<Integer[][]> adjMatrixList = new ArrayList<Integer[][]>();
+	private ArrayList<ArrayList<HashSet<Integer>>> adjListList = new ArrayList<ArrayList<HashSet<Integer>>>();
 	private ArrayList<int[]> edges = new ArrayList<>();
 	private String filename;
 	private ArrayList<HashSet<Integer>> adjList = new ArrayList<>();
@@ -27,7 +32,9 @@ public class Graph {
 	public Graph(String filename) throws FileNotFoundException {
 		this.filename = filename;
 		readEdgeList(filename);
+		
 		generateAdjMatrix();
+		findComponents();
 	}
 	
 	private void readEdgeList(String filename) throws FileNotFoundException {
@@ -43,12 +50,42 @@ public class Graph {
             }
             reader.close();
         }
-        catch(Exception e){
+        catch(Exception e){ 
             System.out.println("--Error, Cant read file-- " + e.getMessage());
             throw new FileNotFoundException("Not found");
         }
 	}
+	private void findComponents() {
+		
+		int vertex = 0;
+		int size = vertices.size();
+		boolean foundAllComponents;
+		do {
+			foundAllComponents = false;
+			int[] visited = new int[size];
+	    	visited[vertex] = 1;
+	    	Queue<Integer> q = new LinkedList<Integer>();
 	
+	    	q.add(vertex);
+	    	
+	    	while (!q.isEmpty()) {
+	    		int v = q.poll();
+	    		HashSet<Integer> adjacent = adjList.get(v);
+	    		for (Integer i : adjacent) {
+	    			if(visited[i] == 0) {
+						visited[i] = 1;
+						q.add(i);
+	    			}
+				}
+	    	}
+	    for (int i = 0; i < visited.length; i++) {
+			if (visited[i] == 0) {
+				foundAllComponents = false;
+				break; 
+			}
+		}
+		} while (foundAllComponents);
+	}
 	public int getNumberOfVertices() {
 		return adjMatrix.length;
 	}
@@ -72,7 +109,6 @@ public class Graph {
     			count++;
     		}
 		}
-    	System.out.println(vertices.toString());
     	adjMatrix = new int[vertices.size()][vertices.size()];
     	for (int i = 0; i < edges.size(); i++) {
     		
@@ -90,9 +126,6 @@ public class Graph {
 			}
 		}
 
-    	for (int i = 0; i < adjList.size(); i++) {
-			System.out.println(i + ": " + adjList.get(i));
-		}
     }
 	
 	@Override
@@ -130,11 +163,7 @@ public class Graph {
     }
     //For Testing
     public ArrayList<int[]> getEdges() {
-    	System.out.print("[");
-    	for (int[] list: edges) {
-    		System.out.print("[" + list[0] + "," + list[1] + "],");
-    	}
-    	System.out.println("]");
+
     	return edges;
     }
     

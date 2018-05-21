@@ -71,7 +71,6 @@ public class Centrality
             }
         }
         //print all the nodes, with their associated values
-        System.out.println(nodesIndex.entrySet());
         numVertices = nodesIndex.size();
         return nodesIndex;
     }
@@ -155,32 +154,31 @@ public class Centrality
     public int[] getClosenessCentrality(Graph g) {
     	ArrayList<HashSet<Integer>> adj = g.getAdjList();
     	int size = g.getNumberOfVertices();
-    	System.out.println(g);
     	float[] closeness = new float[size];
     	int[] topFive = new int[5];
     	PriorityQueue<Node> pq = new PriorityQueue<>(new NodeComparator());
     	for (int vertex = 0; vertex < size; vertex++) {
-
-	    	int[][] distance = new int[size][2];
+    			
+	    	int[] distance = new int[size];
 	    	for (int i = 0; i < size; i++) {
-				distance[i][0] = -1;
+				distance[i] = -1;
 			}
-	    	distance[vertex][0] = 0;
+	    	distance[vertex] = 0;
 	    	Queue<Integer> q = new LinkedList<Integer>();
 	
 	    	q.add(vertex);
 	    	
 	    	while (!q.isEmpty()) {
+	    		
 	    		int v = q.poll();
 	    		HashSet<Integer> adjacent = adj.get(v);
 	    		for (Integer i : adjacent) {
-	    			if(distance[i][0] == -1) {
-						distance[i][0] = distance[v][0] + 1;
-						distance[i][1] = v;
+	    			if(distance[i] == -1) {
+						distance[i] = distance[v] + 1;
 						q.add(i);
 	    			}
 				}
-	    		closeness[vertex] += distance[v][0];
+	    		closeness[vertex] += distance[v];
 	    	
 	    	}
 	    	
@@ -209,9 +207,9 @@ public class Centrality
         java.util.Stack<Integer> stack;
         // assign the shortest paths list to use later on. Corresponds to P on paper
         ArrayList paths[] = new ArrayList[numNodes];
-        // create a sigma list according to paper (Ïƒ)
+        // create a sigma list according to paper (Ã�Æ’)
         float sigma[] = new float[numNodes];
-        // create a delta list according to paper (Î´)
+        // create a delta list according to paper (ÃŽÂ´)
         float[] delta = new float[numNodes];
         // holds the distance for each iteration of the paths
         int distances[];
@@ -264,7 +262,7 @@ public class Centrality
             
             for(int i = 0; i< numNodes; i++)
             {
-                //Î´[v] = 0, for all vertex thats an element of Graph
+                //ÃŽÂ´[v] = 0, for all vertex thats an element of Graph
                 delta[i] = 0;
             }
             
@@ -307,9 +305,9 @@ public class Centrality
         ArrayList paths[] = new ArrayList[numNodes];
         
         int[][] shortestPaths = new int[numNodes][numNodes];
-        // create a sigma list according to paper (Ïƒ)
+        // create a sigma list according to paper (Ã�Æ’)
         float sigma[] = new float[numNodes];
-        // create a delta list according to paper (Î´)
+        // create a delta list according to paper (ÃŽÂ´)
         float[] delta = new float[numNodes];
         // holds the distance for each iteration of the paths
         int distances[];
@@ -361,7 +359,7 @@ public class Centrality
             
             for(int i = 0; i< numNodes; i++)
             {
-                //Î´[v] = 0, for all vertex thats an element of Graph
+                //ÃŽÂ´[v] = 0, for all vertex thats an element of Graph
                 delta[i] = 0;
             }
             

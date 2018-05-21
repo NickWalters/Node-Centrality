@@ -34,6 +34,12 @@ public class main
 		}
 		*/
 
+        Graph testGraph = new Graph("78813.edges.txt");
+        Centrality c4 = new Centrality(testGraph);
+        int[] closeness = c4.getClosenessCentrality(testGraph);
+        for (int i : closeness) {
+            System.out.println(i);
+		}
     	//for (int i = 0; i < closeness.length; i++) {
 			//System.out.println(closeness[i]);
 		//}
