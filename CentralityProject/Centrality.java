@@ -3,6 +3,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.TopLevelAttribute;
 
 import sun.java2d.pipe.AlphaColorPipe;
 import sun.security.krb5.internal.crypto.dk.AesDkCrypto;
@@ -49,6 +50,7 @@ public class Centrality
      * @param allNodesUnique, a list containing info of all distinct nodes
      */
     public HashMap<Integer, Integer> getDegreeCentrality(ArrayList<int[]> nodes){
+    	
         HashMap<Integer, Integer> nodesIndex = new HashMap<>();
         //indexNodes not used
         HashMap<Integer, Integer> indexNodes = new HashMap<>();
@@ -152,13 +154,12 @@ public class Centrality
 	 * @param g
 	 * @return
 	 */
-    public int[][] getClosenessCentrality(Graph g) {
-    	int[][] topFive = new int[g.getNumberComponents()][5];
+    public ArrayList<ArrayList<Integer>> getClosenessCentrality(Graph g) {
+    	ArrayList<ArrayList<Integer>> ordered = new ArrayList<ArrayList<Integer>>();
+    	
     	for (int cN = 0; cN < g.getNumberComponents(); cN++) {
+    		ordered.add(new ArrayList<>());
 	    	ArrayList<HashSet<Integer>> adj = g.getAdjList(cN);
-	    	for (HashSet<Integer> hashSet : adj) {
-				System.out.println(hashSet);
-			}
 	    	int size = adj.size();
 	    	float[] closeness = new float[size];
 	    	PriorityQueue<Node> pq = new PriorityQueue<>(new NodeComparator());
@@ -188,15 +189,18 @@ public class Centrality
 		    	}
 		    	
 		    	pq.add(new Node(vertex, 1/closeness[vertex]));
-		    	//Top five need 5 dequeues.
 		    	closeness[vertex] = 1/closeness[vertex]; 
 	    	}
-	    	for (int i = 0; i < topFive[cN].length; i++) {
-				topFive[cN][i]= g.getVertex(pq.poll().v); 
-				System.out.println(topFive[cN][i]);
+	    	int max = 5;
+	    	if (pq.size() < 5) {
+	    		max = pq.size();
+	    	}
+	    	for (int i = 0; i < max; i++) {
+				ordered.get(cN).add(g.getVertex(pq.poll().v, cN)); 
 			}
+	    	
     	}
-        return topFive;
+        return ordered;
     }
     
     /**
@@ -298,9 +302,10 @@ public class Centrality
     
     
     
-	public int[][] getKatzCentrality(Graph g){
-        int[][] topFive = new int[5][g.getNumberComponents()];
+	public ArrayList<ArrayList<Integer>> getKatzCentrality(Graph g){
+		ArrayList<ArrayList<Integer>> ordered = new ArrayList<ArrayList<Integer>>();
 		for (int cN = 0; cN < g.getNumberComponents(); cN++) {
+    		ordered.add(new ArrayList<>());
 			ArrayList<HashSet<Integer>> adjList = g.getAdjList(cN);
 	        PriorityQueue<Node> pq = new PriorityQueue<>(new NodeComparator());
 	    	int[][] edgeMatrix = g.getAdjMatrix(cN);
@@ -401,11 +406,15 @@ public class Centrality
 				pq.add(new Node(i, catz[i]));
 			}
 
-	    	for (int i = 0; i < topFive.length; i++) {
-				topFive[i][cN]= g.getVertex(pq.poll().v); 
+	    	int max = 5;
+	    	if (pq.size() < 5) {
+	    		max = pq.size();
+	    	}
+	    	for (int i = 0; i < max; i++) {
+				ordered.get(cN).add(g.getVertex(pq.poll().v, cN)); 
 			}
 		}
-        return (topFive);
+        return ordered;
     	
     }
     

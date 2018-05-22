@@ -29,6 +29,7 @@ public class Graph {
 	private ArrayList<HashSet<Integer>> adjList = new ArrayList<>();
 	private Hashtable<Integer,Integer> vertices = new Hashtable<Integer, Integer>();
 	private Hashtable<Integer,Integer> verticesIndex = new Hashtable<Integer, Integer>();
+	private ArrayList<Hashtable<Integer, Integer>> verticesIndexList = new ArrayList<Hashtable<Integer, Integer>>();
 	private ArrayList<HashSet<Integer>> verticesList = new ArrayList<>();
 	private int numberComponents = 1;
 	/**
@@ -148,6 +149,7 @@ public class Graph {
 		for (int i = 0; i < verticesList.size(); i++) {
 			vertices.add(new Hashtable<Integer, Integer>());
 			adjListList.add(new ArrayList<>());
+			verticesIndexList.add(new Hashtable<Integer, Integer>());
 		}
     	int counts[] = new int[verticesList.size()];
     	for (int[] line: edges) {
@@ -158,12 +160,17 @@ public class Graph {
 	    			
 	    			vertices.get(i).put(vertex[0], counts[i]);
 	    			adjListList.get(i).add(counts[i], new HashSet<>());
+	    			verticesIndexList.get(i).put(counts[i], vertex[0]);
 	    			counts[i]++;
+
 	    		}
 	    		if (!vertices.get(i).containsKey(vertex[1]) && verticesList.get(i).contains(verticesIndex.get(vertex[1]))) {
+	    			
 	    			vertices.get(i).put(vertex[1], counts[i]);
 	    			adjListList.get(i).add(counts[i], new HashSet<>());
+	    			verticesIndexList.get(i).put(counts[i], vertex[1]);
 	    			counts[i]++;
+	    			
 	    		}
     		}
 		}
@@ -219,8 +226,8 @@ public class Graph {
     }
     
     
-    public int getVertex(int index) {
-        return vertices.get(index);
+    public int getVertex(int index, int componentNumber) {
+        return verticesIndexList.get(componentNumber).get(index);
     }
     
     public ArrayList<HashSet<Integer>> getAdjList(int componentNumber){
