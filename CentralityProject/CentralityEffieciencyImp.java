@@ -16,7 +16,7 @@ import sun.security.provider.certpath.AdjacencyList;
  * @author Nicholas Walters and James Caldon 22226341
  * @version 9 May 2018 (last change by Nick)
  */
-public class Centrality
+public class CentralityEffieciencyImp
 {
     // instance variables - replace the example below with your own
     ArrayList<Integer> array;
@@ -30,7 +30,7 @@ public class Centrality
     
 
     
-    public Centrality(Graph data)
+    public CentralityEffieciencyImp(Graph2 data)
     {
         //array = info.readFile(1);
         
@@ -228,120 +228,144 @@ public class Centrality
      * Brandes algorithm is the most efficient algorithm for betweeness Centrality
      * this runs in O(nm) time, compared to all other algorithms which require O(n^3) time for unweighted graphs
      */
-    public ArrayList<ArrayList<Integer>> getBetweenessCentrality(Graph g){
+    public ArrayList<ArrayList<Integer>> getBetweenessCentrality(Graph2 g){
     	ArrayList<ArrayList<Integer>> ordered = new ArrayList<ArrayList<Integer>>();
-		for (int cN = 0; cN < g.getNumberComponents(); cN++) {
-		    float[] betweenessCentralities = new float[g.getNumberOfVertices(cN)];
-		    int[][] weightsOfShortestPaths = new int[g.getNumberOfVertices(cN)][];
-    		ordered.add(new ArrayList<>());
-    		PriorityQueue<Node> pq = new PriorityQueue<>(new NodeComparator());
-	    	int[][] edgeMatrix = g.getAdjMatrix(cN);
-	    	ArrayList<HashSet<Integer>> adjList = g.getAdjList(cN);
-		    int numNodes = edgeMatrix.length;
+	    float[] betweenessCentralities = new float[g.getNumberOfVertices()];
+	    int[][] weightsOfShortestPaths = new int[g.getNumberOfVertices()][];
+		ordered.add(new ArrayList<>());
+		ArrayList<PriorityQueue<Node>> pqList = new ArrayList<PriorityQueue<Node>>();
+		pqList.add(new PriorityQueue<>(new NodeComparator()));
+		ArrayList<HashSet<Integer>> adjList = g.getAdjList();
+    	int[][] edgeMatrix = g.getAdjMatrix();
+	    int numNodes = edgeMatrix.length;
+	    boolean anotherComponentFoundYet = false;
+        // Brandes algorithm O(EV^2) for UNWEIGHTED graphs: 
+        // Brandes algorithm : https://people.csail.mit.edu/jshun/6886-s18/papers/BrandesBC.pdf
+        
+        Stack<Integer> stack;
 
-	        // Brandes algorithm O(EV^2) for UNWEIGHTED graphs: 
-	        // Brandes algorithm : https://people.csail.mit.edu/jshun/6886-s18/papers/BrandesBC.pdf
-	        
-	        java.util.Stack<Integer> stack;
-	        // assign the shortest paths list to use later on. Corresponds to P on paper
-	        //ArrayList paths[] = new ArrayList[numNodes];
+        // create a sigma list according to paper (Ã�Æ’)
+        float sigma[] = new float[numNodes];
+        // create a delta list according to paper (ÃŽÂ´)
+        float delta[] = new float[numNodes];
+        // holds the distance for each iteration of the paths
+        int distances[];
+        // assign an empty queue
+        Queue<Integer> queue;
+        boolean visited[] = new boolean[numNodes];
+        int component[] = new int[numNodes];
+        // for each s in V
+        // beginning with the starting node, for all Vertex V which is an element of the graph G do:
+        visited[0] = true; 
+        for(int startingNode = 0; startingNode < numNodes; startingNode++)
+        {
+         
+            // assign the shortest paths list to use later on. Corresponds to P on paper
+            ArrayList<ArrayList<Integer>> paths = new ArrayList<ArrayList<Integer>>();
+            stack = new Stack<Integer>();
+            distances = new int[numNodes];
+            for(int i = 0; i<numNodes; i++)
+            {
+                paths.add(new ArrayList<Integer>()); // create an array inside of an array, to store the different sequences shortest paths
+                sigma[i] = 0;
+                distances[i] = -1;
+            }
+            sigma[startingNode] = 1;
+            distances[startingNode] = 0;
+            
+            queue = new ArrayDeque<Integer>();
+            queue.add(startingNode);
+            int v; // current Node/Vertex
+            // while Q not empty do:
+            while(!queue.isEmpty())
+            {
+                // dequeue v from Q and push to S
+                v = queue.remove();
+                stack.push(v);
+                HashSet<Integer> adjacent = adjList.get(v);
+                // for each neighbour w of v/currentVertex do:
+                for (Integer currentNeighbor : adjacent) {
+                    if(distances[currentNeighbor] < 0)
+                    {
+                        queue.add(currentNeighbor);
+                        distances[currentNeighbor] = distances[v]+1;
+                    }
+                    if(distances[currentNeighbor] == distances[v]+1)
+                    {
+                        sigma[currentNeighbor] += sigma[v];
+                        paths.get(currentNeighbor).add(v);
+                    }
+                    weightsOfShortestPaths[v] = distances;
+                }
+                if(v != startingNode)
+                {               
+                	visited[v] = true; 
+                }
+            }
+            anotherComponentFoundYet = false;
+            for(int i = 0; i< numNodes; i++)
+            {
+                //ÃŽÂ´[v] = 0, for all vertex thats an element of Graph
+                delta[i] = 0f;
+                if (!visited[startingNode] && !visited[i]) {
+                	if (!anotherComponentFoundYet) {
+                		anotherComponentFoundYet = true;
+                    	ordered.add(new ArrayList<>());
+                    	pqList.add(new PriorityQueue<>(new NodeComparator()));
+                	}
+                	component[i] = ordered.size() - 1;
+                }
+            }
+            
+            //While Stack is not empty do:
+            while(!stack.isEmpty())
+            {
+                // pop one by one
+                v = stack.pop();
+                // for each vertex in P/Paths, delta[w] = delta[w] + (sigma[w] / sigma[v]) * (1+ delta[v])
+                java.util.Iterator<Integer> pathIterator = paths.get(v).iterator();
+                int w; // w is the neighbour
+                while(pathIterator.hasNext())
+                {
+                    w = pathIterator.next();
+                    delta[w] += ((sigma[w])/(sigma[v]))*(1f + delta[v]);
+                }
+                if(v != startingNode){
+                    betweenessCentralities[v] += delta[v];
 
-	        // create a sigma list according to paper (Ã�Æ’)
-	        float sigma[] = new float[numNodes];
-	        // create a delta list according to paper (ÃŽÂ´)
-	        float[] delta = new float[numNodes];
-	        // holds the distance for each iteration of the paths
-	        int distances[];
-	        // assign an empty queue
-	        Queue<Integer> queue;
-	        
-	        // for each s in V
-	        // beginning with the starting node, for all Vertex V which is an element of the graph G do:
-	        for(int startingNode = 0; startingNode < numNodes; startingNode++)
-	        {
-		        ArrayList<ArrayList<Integer>> paths = new ArrayList<ArrayList<Integer>>(numNodes);
-	            stack = new java.util.Stack<Integer>();
-	            distances = new int[numNodes];
-	            for(int i = 0; i<numNodes; i++)
-	            {
-	            	paths.add(new ArrayList<Integer>()); // create an array inside of an array, to store the different sequences shortest paths
-	                sigma[i] = 0;
-	                distances[i] = -1;
-	            }
-	            sigma[startingNode] = 1;
-	            distances[startingNode] = 0;
-	            
-	            queue = new ArrayDeque<Integer>();
-	            queue.add(startingNode);
-	            int v; // current Node/Vertex
-	            // while Q not empty do:
-	            while(!queue.isEmpty())
-	            {
-	                // dequeue v from Q and push to S
-	                v = queue.remove();
-	                stack.push(v);
-	                HashSet<Integer> adjacent = adjList.get(v);
-	                // for each neighbour w of v/currentVertex do:
-	                for (Integer currentNeighbor : adjacent) {
-	                    if(distances[currentNeighbor] < 0)
-	                    {
-	                        queue.add(currentNeighbor);
-	                        distances[currentNeighbor] = distances[v]+1;
-	                    }
-	                    if(distances[currentNeighbor] == distances[v]+1)
-	                    {
-	                        sigma[currentNeighbor] += sigma[v];
-	                        paths.get(currentNeighbor).add(v);
-	                    }
-	                    weightsOfShortestPaths[v] = distances;
-	                }
-	            }
-
-	            for(int i = 0; i< numNodes; i++)
-	            {
-	                //ÃŽÂ´[v] = 0, for all vertex thats an element of Graph
-	                delta[i] = 0;
-	            }
-	            
-	            //While Stack is not empty do:
-	            while(!stack.isEmpty())
-	            {
-	                // pop one by one
-	                v = stack.pop();
-	                // for each vertex in P/Paths, delta[w] = delta[w] + (sigma[w] / sigma[v]) * (1+ delta[v])
-	                java.util.Iterator<Integer> pathIterator = paths.get(v).iterator();
-	                int w; // w is the neighbour
-	                while(pathIterator.hasNext())
-	                {
-	                    w = pathIterator.next();
-	                    delta[w] += (float)((float)(sigma[w])/ (float)(sigma[v]))*(float)(1+ delta[v]);
-	                }
-	                if(v != startingNode){
-	                    betweenessCentralities[v] += (float)delta[v];
-
-	                }
-	                
-	            }
+                }
+                
+            }
 
 
-	            
-	        }
-            for (int i = 0; i < betweenessCentralities.length; i++) {
-                pq.add(new Node(i, betweenessCentralities[i]));
-			}
-	        int max = 5;
-	    	if (pq.size() < 5) {
-	    		max = pq.size();
-	    	}
-	    	for (int i = 0; i < max; i++) {
-				ordered.get(cN).add(g.getVertex(pq.poll().v, cN)); 
-			}
+            
+      
+        }
+        for (int i = 0; i < betweenessCentralities.length; i++) {
+            pqList.get(component[i]).add(new Node(i, betweenessCentralities[i]));
 		}
+        System.out.println(g.getVertex(pqList.get(1).poll().v));
+        System.out.println(g.getVertex(pqList.get(1).poll().v));
+        int max = 5;
+        for (int i = 0; i < pqList.size(); i++) {
+
+        	if (pqList.get(i).size() < 5) {
+        		max = pqList.get(i).size();
+        	}
+        	for (int j = 0; j < max; j++) {
+    			ordered.get(i).add(g.getVertex(pqList.get(j).poll().v)); 
+    		}
+		}
+        System.out.println(ordered.get(1));
         return ordered;
     }
     
     
     
+	private void BFS(int startingNode) {
+
+	}
+
 	public ArrayList<ArrayList<Integer>> getKatzCentrality(Graph g){
 		ArrayList<ArrayList<Integer>> ordered = new ArrayList<ArrayList<Integer>>();
 		for (int cN = 0; cN < g.getNumberComponents(); cN++) {
@@ -411,11 +435,12 @@ public class Centrality
 	                    weightsOfShortestPaths[v] = distances;
 	                }
 	            }
-
+	            
 	            for(int i = 0; i< numNodes; i++)
 	            {
 	                //ÃŽÂ´[v] = 0, for all vertex thats an element of Graph
 	                delta[i] = 0;
+
 	            }
 	            
 	            //While Stack is not empty do:

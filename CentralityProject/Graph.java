@@ -43,9 +43,6 @@ public class Graph {
 		generateAdjMatrix();
 		findComponents();
 		generateAdjMatrixForComponents();
-    	for (HashSet<Integer> hashSet : adjListList.get(1)) {
-			System.out.println(hashSet);
-		}
 	}
 	
 	private void readEdgeList(String filename) throws FileNotFoundException {
@@ -105,6 +102,10 @@ public class Graph {
 	}
 	public int getNumberOfVertices() {
 		return adjMatrix.length;
+	}
+	
+	public int getNumberOfVertices(int componentNumber) {
+		return adjListList.get(componentNumber).size();
 	}
 	
 	private void generateAdjMatrix() {

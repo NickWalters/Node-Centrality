@@ -34,12 +34,36 @@ public class main
 		}
 		*/
 
-        Graph testGraph = new Graph("78813.edges.txt");
+        Graph2 testGraph = new Graph2("78813.edges.txt");
         //Graph testGraph = new Graph("428333.edges.txt");
         //Graph testGraph = new Graph("test.txt");
-        Centrality c4 = new Centrality(testGraph);
+        CentralityEffieciencyImp c4 = new CentralityEffieciencyImp(testGraph);
+        /**
+        ArrayList<ArrayList<Integer>> degree = c4.getDegreeCentrality(testGraph);
+        for (ArrayList<Integer> i : degree) {
+        	System.out.println(i);
+		}
+        
         ArrayList<ArrayList<Integer>> closeness = c4.getClosenessCentrality(testGraph);
         for (ArrayList<Integer> i : closeness) {
+        	System.out.println(i);
+		}
+		**/
+        ArrayList<ArrayList<Integer>> betweeness = c4.getBetweenessCentrality(testGraph);
+        for (ArrayList<Integer> i : betweeness) {
+        	System.out.println(i);
+		}
+        /*
+        ArrayList<ArrayList<Integer>> catz = c4.getKatzCentrality(testGraph);
+        for (ArrayList<Integer> i : catz) {
+        	System.out.println(i);
+		}
+		*/
+        
+        Graph testGraph1 = new Graph("78813.edges.txt");
+        Centrality c3 = new Centrality(testGraph1);
+        ArrayList<ArrayList<Integer>> betweeness2 = c3.getBetweenessCentrality(testGraph1);
+        for (ArrayList<Integer> i : betweeness2) {
         	System.out.println(i);
 		}
     	//for (int i = 0; i < closeness.length; i++) {
