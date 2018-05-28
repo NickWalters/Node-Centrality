@@ -4,11 +4,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 
 /**
@@ -22,19 +17,15 @@ import javax.swing.text.StyledEditorKit.ForegroundAction;
 public class Graph2 {
 
 	private int[][] adjMatrix;
-	private ArrayList<int[][]> adjMatrixList = new ArrayList<int[][]>();
 	private ArrayList<int[]> edges = new ArrayList<>();
-	private String filename;
 	private ArrayList<HashSet<Integer>> adjList = new ArrayList<>();
 	private Hashtable<Integer,Integer> vertices = new Hashtable<>();
 	private Hashtable<Integer,Integer> verticesIndex = new Hashtable<>();
-	private int numberComponents = 1;
 	/**
 	 * @throws FileNotFoundException 
 	 * 
 	 */
 	public Graph2(String filename) throws FileNotFoundException {
-		this.filename = filename;
 		readEdgeList(filename);
 		
 		generateAdjMatrix();
@@ -135,18 +126,5 @@ public class Graph2 {
 			adjListClone.add(new HashSet<Integer>(adjList.get(i)));
 		}
         return adjListClone;
-    }
-    //For Testing
-    public ArrayList<int[]> getEdges() {
-
-    	return edges;
-    }
-    
-    public int getNumberComponents() {
-        return numberComponents;
-    }
-    
-    public String getFilname(){
-        return filename;
     }
 }

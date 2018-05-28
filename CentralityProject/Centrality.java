@@ -437,9 +437,13 @@ public class Centrality
 	                }
 	                
 	            }
-
-
-	            
+	            /* ????
+				for (int j = 0; j < numNodes; j++) {
+					catz[startingNode] = catz[startingNode] + (float) (adjList.get(j).size()*Math.pow(0.5,weightsOfShortestPaths[startingNode][j]));
+					
+				}
+				pq.add(new Node(startingNode, catz[startingNode]));
+				*/
 	        }
 	        double alpha = 0.5;		
 	        for (int i = 0; i < numNodes; i++) {
