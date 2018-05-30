@@ -6,7 +6,7 @@ import java.util.*;
  * @author Nicholas Walters and James Caldon 22226341
  * @version 9 May 2018 (last change by Nick)
  */
-public class CentralityEffieciencyImp
+public class Centrality
 {
 
     private ArrayList<ArrayList<Integer>> degreeCentralities = new ArrayList<>();
@@ -16,7 +16,7 @@ public class CentralityEffieciencyImp
     
 
     
-    public CentralityEffieciencyImp(Graph2 g)
+    public Centrality(Graph g)
     {
     	calculateCentralities(g);
     }
@@ -51,7 +51,11 @@ public class CentralityEffieciencyImp
 	}
     
     
-    private void calculateCentralities(Graph2 g) {
+    /**
+     * @author Nick and James
+     * @param g
+     */
+    private void calculateCentralities(Graph g) {
 	    int numNodes = g.getNumberOfVertices();
         float catz[] = new float[numNodes];
         float alpha = 0.5f;	
@@ -84,7 +88,7 @@ public class CentralityEffieciencyImp
 	    int cN = 1;
         for(int startingNode = 0; startingNode < numNodes; startingNode++)
         {
-        	System.out.println(pqList.size() + " " + cN + " " + startingNode);
+
             // assign the shortest paths list to use later on. Corresponds to P on paper
             ArrayList<ArrayList<Integer>> paths = new ArrayList<ArrayList<Integer>>();
             stack = new Stack<Integer>();
@@ -103,6 +107,8 @@ public class CentralityEffieciencyImp
                 paths.add(new ArrayList<Integer>()); // create an array inside of an array, to store the different sequences shortest paths
                 sigma[i] = 0;
                 distances[i] = -1;
+                //ÃŽÂ´[v] = 0, for all vertex thats an element of Graph
+                delta[i] = 0f;
             }
             sigma[startingNode] = 1;
             distances[startingNode] = 0;
@@ -141,8 +147,7 @@ public class CentralityEffieciencyImp
             for(int i = 0; i< numNodes; i++)
             {
 
-                //ÃŽÂ´[v] = 0, for all vertex thats an element of Graph
-                delta[i] = 0f;
+
                 if (visited[i]) {
                 	catz[startingNode] = catz[startingNode] + (float) (adjList.get(i).size()*Math.pow(alpha,weightsOfShortestPaths[startingNode][i]));
                 }
@@ -173,6 +178,7 @@ public class CentralityEffieciencyImp
             closeness[startingNode] = 1/closeness[startingNode];
       
         }
+        
     	for (int i = 0; i < adjList.size(); i++) {
 			pqList.get(component[i]).add(new Node(i, (float) adjList.get(i).size()));
 		}
@@ -184,6 +190,7 @@ public class CentralityEffieciencyImp
 		}
 
         findTopFive(pqList, closenessCentralities, g);
+        
         for (int k = 0; k < numNodes; k++) {
             pqList.get(component[k]).add(new Node(k, betweenessCentralities[k]));
 
@@ -195,17 +202,13 @@ public class CentralityEffieciencyImp
         
 	
         for (int i = 0; i < numNodes; i++) {
-			for (int j = 0; j < numNodes; j++) {
-				//Should this be here or in line 147
-				//catz[i] = catz[i] + (float) (adjList.get(j).size()*Math.pow(alpha,weightsOfShortestPaths[i][j]));
-			}
 			pqList.get(component[i]).add(new Node(i, catz[i]));
 		}
         
         findTopFive(pqList, katzCentralities, g);
     }
     
-    private void findTopFive(ArrayList<PriorityQueue<Node>> pqList, ArrayList<ArrayList<Integer>> aL, Graph2 g) {
+    private void findTopFive(ArrayList<PriorityQueue<Node>> pqList, ArrayList<ArrayList<Integer>> aL, Graph g) {
         for (int i = 0; i < pqList.size(); i++) {
         	int count = 0;
         	aL.add(new ArrayList<>());
@@ -217,16 +220,16 @@ public class CentralityEffieciencyImp
 		}
     }
     
-    public ArrayList<ArrayList<Integer>> returnKatzCentrality(){
+    public ArrayList<ArrayList<Integer>> getKatzCentrality(){
         return katzCentralities;
     }
-    public ArrayList<ArrayList<Integer>> returnClosenessCentrality(){
+    public ArrayList<ArrayList<Integer>> getClosenessCentrality(){
         return closenessCentralities;
     }
-    public ArrayList<ArrayList<Integer>> returnBetweenessCentrality(){
+    public ArrayList<ArrayList<Integer>> getBetweenessCentrality(){
         return betweennessCentralities;
     }
-    public ArrayList<ArrayList<Integer>> returnDegreeCentrality(){
+    public ArrayList<ArrayList<Integer>> getDegreeCentrality(){
         return degreeCentralities;
     }
 }

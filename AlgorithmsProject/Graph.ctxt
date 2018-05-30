@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Graph
+comment0.text=\n\ @author\ James\n\n
+comment1.params=filename
+comment1.target=Graph(java.lang.String)
+comment1.text=\n\ @throws\ FileNotFoundException\ \n\ \n
+comment2.params=filename
+comment2.target=void\ readEdgeList(java.lang.String)
+comment3.params=
+comment3.target=int\ getNumberOfVertices()
+comment4.params=
+comment4.target=void\ generateAdjList()
+comment5.params=index
+comment5.target=int\ getVertex(int)
+comment6.params=
+comment6.target=java.util.ArrayList\ getAdjList()
+numComments=7
