@@ -18,37 +18,37 @@ public class Centrality
     
     public Centrality(Graph g)
     {
-    	calculateCentralities(g);
+        calculateCentralities(g);
     }
-	/**
-	 * @author James
-	 * holds reference to the vertex and its weight
-	 */
+    /**
+     * @author James
+     * holds reference to the vertex and its weight
+     */
     
-	public class Node {
-		public final Integer v;
-		public final Float w;
-		Node (Integer vertex, Float weight) {
-			v = vertex;
-			w = weight;
-		}
-	}
-	
-	/**
-	 * @author James
-	 * Comparator for two nodes, used by the priority queue
-	 * the highest priority is the lower value
-	 */
-	public class NodeComparator implements Comparator<Node>{
+    public class Node {
+        public final Integer v;
+        public final Float w;
+        Node (Integer vertex, Float weight) {
+            v = vertex;
+            w = weight;
+        }
+    }
+    
+    /**
+     * @author James
+     * Comparator for two nodes, used by the priority queue
+     * the highest priority is the lower value
+     */
+    public class NodeComparator implements Comparator<Node>{
 
-		@Override
-		public int compare(Node o1, Node o2) {
-			if (o1.w < o2.w) return 1;
-			else if (o1.w > o2.w) return -1;
-			return 0;
-		}	
-		
-	}
+        @Override
+        public int compare(Node o1, Node o2) {
+            if (o1.w < o2.w) return 1;
+            else if (o1.w > o2.w) return -1;
+            return 0;
+        }   
+        
+    }
     
     
     /**
@@ -56,13 +56,13 @@ public class Centrality
      * @param g
      */
     private void calculateCentralities(Graph g) {
-	    int numNodes = g.getNumberOfVertices();
+        int numNodes = g.getNumberOfVertices();
         float catz[] = new float[numNodes];
-        float alpha = 0.5f;	
-	    float[] betweenessCentralities = new float[numNodes];
-	    int[][] weightsOfShortestPaths = new int[numNodes][];
-		ArrayList<PriorityQueue<Node>> pqList = new ArrayList<PriorityQueue<Node>>();
-		ArrayList<HashSet<Integer>> adjList = g.getAdjList();
+        float alpha = 0.5f; 
+        float[] betweenessCentralities = new float[numNodes];
+        int[][] weightsOfShortestPaths = new int[numNodes][];
+        ArrayList<PriorityQueue<Node>> pqList = new ArrayList<PriorityQueue<Node>>();
+        ArrayList<HashSet<Integer>> adjList = g.getAdjList();
 
         // Brandes algorithm O(EV^2) for UNWEIGHTED graphs: 
         // Brandes algorithm : https://people.csail.mit.edu/jshun/6886-s18/papers/BrandesBC.pdf
@@ -82,10 +82,10 @@ public class Centrality
         // for each s in V
         // beginning with the starting node, for all Vertex V which is an element of the graph G do:
         visited[0] = true; 
-	    float[] closeness = new float[g.getNumberOfVertices()];
-	    pqList.add(new PriorityQueue<>(new NodeComparator()));
-	    
-	    int cN = 1;
+        float[] closeness = new float[g.getNumberOfVertices()];
+        pqList.add(new PriorityQueue<>(new NodeComparator()));
+        
+        int cN = 1;
         for(int startingNode = 0; startingNode < numNodes; startingNode++)
         {
 
@@ -94,13 +94,13 @@ public class Centrality
             stack = new Stack<Integer>();
             distances = new int[numNodes];
             if (!visited[startingNode]) {
-            	for(int i = 0; i < numNodes; i++) {
-            		if (!visited[i]) {
-            			component[i] = cN;
-            		}
-            	}
-            	pqList.add(new PriorityQueue<>(new NodeComparator()));
-            	cN++;
+                for(int i = 0; i < numNodes; i++) {
+                    if (!visited[i]) {
+                        component[i] = cN;
+                    }
+                }
+                pqList.add(new PriorityQueue<>(new NodeComparator()));
+                cN++;
             }
             for(int i = 0; i<numNodes; i++)
             {
@@ -145,13 +145,10 @@ public class Centrality
 
             
             for(int i = 0; i< numNodes; i++)
-            {
-
-
-                if (visited[i]) {
-                	catz[startingNode] = catz[startingNode] + (float) (adjList.get(i).size()*Math.pow(alpha,weightsOfShortestPaths[startingNode][i]));
+            {              
+                if (visited[i]) {                 
+                    catz[startingNode] = catz[startingNode] + (float) (adjList.get(i).size()*Math.pow(alpha,weightsOfShortestPaths[startingNode][i]));
                 }
-
             }
 
             
@@ -179,45 +176,45 @@ public class Centrality
       
         }
         
-    	for (int i = 0; i < adjList.size(); i++) {
-			pqList.get(component[i]).add(new Node(i, (float) adjList.get(i).size()));
-		}
-    	
-    	findTopFive(pqList, degreeCentralities, g);
+        for (int i = 0; i < adjList.size(); i++) {
+            pqList.get(component[i]).add(new Node(i, (float) adjList.get(i).size()));
+        }
+        
+        findTopFive(pqList, degreeCentralities, g);
         
         for (int k = 0; k < numNodes; k++) {
             pqList.get(component[k]).add(new Node(k, closeness[k]));
-		}
+        }
 
         findTopFive(pqList, closenessCentralities, g);
         
         for (int k = 0; k < numNodes; k++) {
             pqList.get(component[k]).add(new Node(k, betweenessCentralities[k]));
 
-		}
+        }
         
         findTopFive(pqList, betweennessCentralities, g);
 
 
         
-	
+    
         for (int i = 0; i < numNodes; i++) {
-			pqList.get(component[i]).add(new Node(i, catz[i]));
-		}
+            pqList.get(component[i]).add(new Node(i, catz[i]));
+        }
         
         findTopFive(pqList, katzCentralities, g);
     }
     
     private void findTopFive(ArrayList<PriorityQueue<Node>> pqList, ArrayList<ArrayList<Integer>> aL, Graph g) {
         for (int i = 0; i < pqList.size(); i++) {
-        	int count = 0;
-        	aL.add(new ArrayList<>());
-			while (!pqList.get(i).isEmpty() && count < 5) {
-				aL.get(i).add(g.getVertex(pqList.get(i).poll().v));
-				count++;
-			}
+            int count = 0;
+            aL.add(new ArrayList<>());
+            while (!pqList.get(i).isEmpty() && count < 5) {
+                aL.get(i).add(g.getVertex(pqList.get(i).poll().v));
+                count++;
+            }
             pqList.get(i).clear();
-		}
+        }
     }
     
     public ArrayList<ArrayList<Integer>> getKatzCentrality(){
