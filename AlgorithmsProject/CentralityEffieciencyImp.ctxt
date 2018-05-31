@@ -14,6 +14,7 @@ comment4.target=java.util.ArrayList\ getBetweenessCentrality(Graph2)
 comment4.text=\n\ @author\ Nick\n\ Brandes\ algorithm\ is\ the\ most\ efficient\ algorithm\ for\ betweeness\ Centrality\n\ this\ runs\ in\ O(nm)\ time,\ compared\ to\ all\ other\ algorithms\ which\ require\ O(n^3)\ time\ for\ unweighted\ graphs\n
 comment5.params=g
 comment5.target=java.util.ArrayList\ getKatzCentrality(Graph2)
+comment5.text=\n\ @author\ Nick\n
 comment6.params=
 comment6.target=int\ getNumVertices()
 comment7.params=

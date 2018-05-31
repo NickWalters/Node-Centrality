@@ -16,8 +16,9 @@ public class printResults
             
             
             
-            
+            System.out.println("----CITS2200 Centrality Analyser, by Nick Walters (22243339) and James Caldon (22226341)----");
             Graph testGraph = new Graph("78813.edges.txt");
+            System.out.println();
             Graph testGraphTwo = new Graph("428333.edges.txt");
             
             long startTime78813 = System.currentTimeMillis();

@@ -334,7 +334,9 @@ public class CentralityEffieciencyImp
     }
     
     
-    
+    /**
+     * @author Nick
+     */
 	public ArrayList<ArrayList<Integer>> getKatzCentrality(Graph2 g){
 		ArrayList<ArrayList<Integer>> ordered = new ArrayList<ArrayList<Integer>>();
 		for (int cN = 0; cN < g.getNumberComponents(); cN++) {
