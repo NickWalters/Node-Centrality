@@ -1,6 +1,0 @@
-#BlueJ class context
-comment0.target=printResults
-comment0.text=\n\ The\ main\ method\ which\ prints\ final\ outputs\ and\ ties\ together\ all\ classes\n\n\ @author\ Nicholas\ Walters\ 22243339\ and\ James\ Caldon\ 2226341\n\ @version\ 9\ May\ 2018\n
-comment1.params=args
-comment1.target=void\ main(java.lang.String[])
-numComments=2
